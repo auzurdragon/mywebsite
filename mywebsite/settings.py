@@ -55,7 +55,10 @@ ROOT_URLCONF = 'mywebsite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [   # 指定模板加载路径
+            '/mywebsite/templates',             # 绝对路径
+            # os.path.join(os.path.dirname(__file__), 'templates').replace('\\', '/') # 相对路径
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
