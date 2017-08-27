@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'mywebsite',
 ]
 
 MIDDLEWARE = [
@@ -103,9 +104,12 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'en-us'
+# Django1.9以后language code 'zh-cn'就被丢弃了，使用'zh-hans'代替。坑你没商量啊。
+LANGUAGE_CODE = 'zh-Hans'
 
 TIME_ZONE = 'UTC'
+# TIME_ZONE = 'CCT'
 
 USE_I18N = True
 
