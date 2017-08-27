@@ -56,7 +56,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [   # 指定模板加载路径
-            '/mywebsite/templates',             # 绝对路径
+            'templates',             # 绝对路径, <webroot>/templates
             # os.path.join(os.path.dirname(__file__), 'templates').replace('\\', '/') # 相对路径
         ],
         'APP_DIRS': True,
@@ -125,3 +125,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+    '/static/',
+]

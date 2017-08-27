@@ -13,11 +13,17 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+# 加载url解析方法, 用于urlpatterns
 from django.conf.urls import url
+# 加载admin, 用于管理后台url
 from django.contrib import admin
+# 加载静态文件目录
+from django.conf import settings
+from django.conf.urls.static import static
+# 加载mywebsite下的views视图文件
 from mywebsite import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index), # 指定首页为index
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
