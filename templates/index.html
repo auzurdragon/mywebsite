@@ -1,115 +1,70 @@
-<!DOCTYPE html>
-<!-- 加载静态文件目录 -->
-{% load static %}
-<!-- 申明html所使用的语言，有助于语音合成工具确定其发音，BOOTSTRAP提供的语言代码表https://www.sitepoint.com/iso-2-letter-language-codes/ -->
-<html lang="zh-CN">
-    <head>
-        <!-- 申明IE绘制页面应该使用edge mode -->
-        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-        <!-- 申明字符编码 -->
-        <meta charset="utf-8">
-        <!-- 引入BOOTSTRAP -->
-        <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-        <script src="{% static 'bootstrap/js/jquery-1.11.0.min.js' %}"></script>
-        <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-        <!-- 新 Bootstrap 核心 CSS 文件 -->
-        <!-- <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
-        <!-- 可选的Bootstrap主题文件（一般不使用）-->
-        <!-- <script src="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"></script> -->
-        <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-        <!-- <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script> -->
-        <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-        <!-- <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
-       
-        <!-- 加载D3 -->
-        <!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
-        <script src="{% static 'd3/d3.min.js' %}"></script>
-        <title>淡墨青衫-书山有路勤为径, 学海无涯苦作舟</title>
-    </head>
-    <body>
-        <div class="contianer nav" role="navigation" style="margin:1%">
-            <nav class="navbar navbar-default" role="navigation">
-                <!-- <div class="container-fluid"> -->
-                    <!--  -->
+{% extends 'base.html' %}
 
-                    <!-- 导航栏中的文本 
-                    <div>
-                        <p class="navbar-text">纯文本</p>
-                    </div>
-                    -->
-                    <!-- 导航条 -->
-                    <!--
-                        .navbar-inverse ,反色效果, 黑底白字
-                        .navbar-fixed-top, 固定在顶部
-                    -->
-                    <div class="navbar navbar-inverse">
-                        <ul class="nav navbar-nav">
-                            <!-- li.active标记为活跃 -->
-                            <div class="navbar-header">
-                                <a class="navbar-brand" href="#">Python</a>
-                            </div>                        
-                            <li><a class="navbar-brand" href="#">首页</a></li>
-                            <li><a href="#">D3.js</a></li>
-                            <!-- 在导航条中增加一个下拉菜单 -->
-                            <li class="dropdown">
-                                <!-- 设置下拉菜单的标题 -->
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    学习笔记
-                                    <!-- 添加一个小下拉三角形 -->
-                                    <b class="caret"></b> 
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Python</a></li>
-                                    <li><a href="#">R</a></li>
-                                    <!-- 插入分隔线 -->
-                                    <li class="divider"></li>
-                                    <li><a href="#">D3.js</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Bootstrap</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    我的收藏
-                                    <b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">电影</a></li>
-                                    <li><a href="#">歌曲</a></li>
-                                    <li><a href="#">书籍</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                        <!-- 导航栏中的表单, navbar-right指定对齐方式 -->
-                        <form class="navbar-form navbar-right" role="search">
-                            <!-- 输入框 -->
-                            <div class="form-group">
-                                <!-- placeholder="Search"指定输入框中的默认文字 -->
-                                <input type="text" class="form-control" placeholder="Search">
-                            </div>
-                            <!-- 搜索按钮 -->
-                            <button type="submit" class="btn btn-default">搜索</button>
-                        </form>
-                    </div>
-                <!-- </div> -->
-            </nav>
-        </div>
-        <div class="container body">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <H4 class="panel-title">Python</H4>
-                        </div>
-                        <div class="panel-body">
-                            <p>Python是一种解释型、面向对象、动态数据类型的高级程序设计语言。</p>
-                        </div>
-                        <div class="panel-footer">
-                            2017-09-01
-                        </div>
-                    </div>
+{% block content %}
+<div class="container body">
+    <div class="row">
+        <div class="col-md-3" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='/python/'" >
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <H4 class="panel-title">Python</H4>
+                </div>
+                <div class="panel-body">
+                    <p>Python是一种解释型、面向对象、动态数据类型的高级程序设计语言。</p>
                 </div>
             </div>
         </div>
-    </body>
-</html>
+        <div class="col-md-3" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='/d3js/'" >
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <H4 class="panel-title">D3.js</H4>
+                </div>
+                <div class="panel-body">
+                    <p>D3.js是一个JavaScript库，它可以通过数据来操作文档。D3可以通过使用HTML、SVG和CSS把数据鲜活形象地展现出来。</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='/mongodb/'" >
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <H4 class="panel-title">MongoDB</H4>
+                </div>
+                <div class="panel-body">
+                    <p>MongoDB是一个基于分布式文件存储的数据库。由C++语言编写。旨在为WEB应用提供可扩展的高性能数据存储解决方案。</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='/rlang/'" >
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <H4 class="panel-title">R</H4>
+                </div>
+                <div class="panel-body">
+                    <p>R是属于GNU系统的一个自由、免费、源代码开放的软件，它是一个用于统计计算和统计制图的优秀工具。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='/bootstrap/'" >
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <H4 class="panel-title">Bootstrap</H4>
+                </div>
+                <div class="panel-body">
+                    <p>Bootstrap是Twitter推出的一个用于前端开发的开源工具包，是基于 HTML、CSS、JAVASCRIPT 的，简洁灵活使得 Web 开发更加快捷。</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='/django/'" >
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <H4 class="panel-title">Django</H4>
+                </div>
+                <div class="panel-body">
+                    <p>Django是一个开放源代码的Web应用框架，由Python写成。采用了MVC的软件设计模式，即模型M，视图V和控制器C。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

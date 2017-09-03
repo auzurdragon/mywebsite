@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!-- 加载静态文件目录 -->
+{% load static %}
+<!-- 申明html所使用的语言，有助于语音合成工具确定其发音，BOOTSTRAP提供的语言代码表https://www.sitepoint.com/iso-2-letter-language-codes/ -->
+<html lang="zh-CN">
+    <head>
+        <!-- 申明IE绘制页面应该使用edge mode -->
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <!-- 申明字符编码 -->
+        <meta charset="utf-8">
+        <!-- 引入BOOTSTRAP -->
+        <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+        <script src="{% static 'bootstrap/js/jquery-1.11.0.min.js' %}"></script>
+        <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+        <!-- 新 Bootstrap 核心 CSS 文件 -->
+        <!-- <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
+        <!-- 可选的Bootstrap主题文件（一般不使用）-->
+        <!-- <script src="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"></script> -->
+        <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+        <!-- <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script> -->
+        <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+        <!-- <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+       
+        <!-- 加载D3 -->
+        <!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
+        <script src="{% static 'd3/d3.min.js' %}"></script>
+        <title>{% block title %}淡墨青衫-书山有路勤为径, 学海无涯苦作舟{% endblock %}</title>
+    </head>
+    <body>
+        {% include 'nav.html' %}
+        {% block content %}<p>错误:未获得block content</p>{% endblock %}
+    </body>
+</html>

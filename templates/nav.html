@@ -1,0 +1,68 @@
+<div class="contianer nav" role="navigation" style="margin:1%">
+    <nav class="navbar navbar-default" role="navigation">
+        <!-- <div class="container-fluid"> -->
+            <!--  -->
+
+            <!-- 导航栏中的文本 
+            <div>
+                <p class="navbar-text">纯文本</p>
+            </div>
+            -->
+            <!-- 导航条 -->
+            <!--
+                .navbar-inverse ,反色效果, 黑底白字
+                .navbar-fixed-top, 固定在顶部
+            -->
+            <div class="navbar navbar-inverse">
+                <ul class="nav navbar-nav">
+                    <!-- li.active标记为活跃 -->
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="/">首页</a>
+                    </div>                        
+                    <li><a href="/examples/">实例</a></li>
+                    <!-- 在导航条中增加一个下拉菜单 -->
+                    <li class="dropdown">
+                        <!-- 设置下拉菜单的标题 -->
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            学习笔记
+                            <!-- 添加一个小下拉三角形 -->
+                            <b class="caret"></b> 
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/python/">Python</a></li>
+                            <li><a href="#">R</a></li>
+                            <!-- 插入分隔线 -->
+                            <li class="divider"></li>
+                            <li><a href="#">D3.js</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Bootstrap</a></li>
+                            <li><a href="/django/">Django</a></li>
+                            <li><a href="/mongodb/">MongoDB</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            我的收藏
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">电影</a></li>
+                            <li><a href="#">歌曲</a></li>
+                            <li><a href="#">书籍</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- 导航栏中的表单, navbar-right指定对齐方式 -->
+                <form class="navbar-form navbar-right" role="search">
+                    <!-- 输入框 -->
+                    <div class="form-group">
+                        <!-- placeholder="Search"指定输入框中的默认文字 -->
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <!-- 搜索按钮 -->
+                    <button type="submit" class="btn btn-default">搜索</button>
+                </form>
+            </div>
+        <!-- </div> -->
+    </nav>
+</div>
