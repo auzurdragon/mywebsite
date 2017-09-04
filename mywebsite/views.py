@@ -20,4 +20,3 @@ def examples(request):
     from mywebsite.models import web_user
     tlist = web_user.objects.all()
     return render(request, 'examples.html', {'td_list':tlist})
-

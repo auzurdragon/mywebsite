@@ -26,6 +26,6 @@ from mywebsite import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index), # 指定首页为index
-    url(r'^python/', views.python),
-    url(r'^examples/', views.examples),
+    url(r'^python/$', views.python),
+    url(r'^examples/$', views.examples),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
