@@ -20,3 +20,8 @@ def examples(request):
     from mywebsite.models import web_user
     tlist = web_user.objects.all()
     return render(request, 'examples.html', {'td_list':tlist})
+
+def weixin(request):
+    para1 = request.GET.get('a')
+    para2 = request.GET.get('b')
+    return HttpResponse("%s,%s" % (para1, para2))

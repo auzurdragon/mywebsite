@@ -28,4 +28,5 @@ urlpatterns = [
     url(r'^$', views.index), # 指定首页为index
     url(r'^python/$', views.python),
     url(r'^examples/$', views.examples),
+    url(r'^weixin/$', views.weixin),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
