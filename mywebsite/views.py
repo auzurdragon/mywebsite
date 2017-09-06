@@ -22,9 +22,9 @@ def examples(request):
     typeval = request.GET.get("type", "")
     print(typeval)
     if typeval:
-        return render(request, "examples/%s.html" % request.GET.get("id"))
+        return render(request, "example/%s.html" % request.GET.get("id"))
     else:
-        return render(request, 'examples.html', {'clist':clist})
+        return render(request, 'example.html', {'clist':clist})
 
 def children(request):
     """视图"""
