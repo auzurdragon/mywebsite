@@ -135,3 +135,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
     '/static/',
 ]
+
+# 设置生产环境的静态文件目录
+STATIC_ROOT = "/var/www/static/"
