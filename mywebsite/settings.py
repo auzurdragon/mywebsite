@@ -29,7 +29,7 @@ SECRET_KEY = '4csj$_2@&0h08q!!(&x^1$j)se(*la03!xh0+w^o-v(+o(g!8e'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['112.74.161.9',]
+ALLOWED_HOSTS = ['112.74.161.9', 'localhost',]
 
 
 # Application definition
@@ -61,7 +61,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [   # 指定模板加载路径
-            'templates',             # 绝对路径, <webroot>/templates
+            'templates/',             # 绝对路径, <webroot>/templates
             # os.path.join(os.path.dirname(__file__), 'templates').replace('\\', '/') # 相对路径
         ],
         'APP_DIRS': True,
