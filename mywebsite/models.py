@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
-from mongoengine import *
+"""模型"""
+from mongoengine import Document, StringField, IntField, URLField, DateTimeField
 
 class web_user(Document):
     username = StringField(required=True)
@@ -11,8 +12,12 @@ class web_user(Document):
 
 class web_html(Document):
     title = StringField(required=True)
-    classof = StringField()
-    url = StringField()
+    orderid = IntField()
+    typeval = StringField()
+    urlid = IntField()
+    urllink = URLField()
+    datestr = DateTimeField()
+    author = StringField()
 
     def __str__(self):
         return self.title
