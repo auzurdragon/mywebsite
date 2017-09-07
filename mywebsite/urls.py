@@ -29,4 +29,5 @@ urlpatterns = [
     url(r'^python/$', views.python),
     url(r'^examples/$', views.examples),
     url(r'^children/$', views.children),
+    url(r'^hwsubmit/$', views.hwsubmit),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

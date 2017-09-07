@@ -35,3 +35,25 @@ def children(request):
         return render(request, "children/%s.html" % request.GET.get("id"))
     else:
         return render(request, "children.html", {'clist':clist})
+
+def hwsubmit(request):
+    """提交"""
+    from mywebsite.models import web_html
+    from mywebsite.models import web_user
+    from time import time, localtime, strftime
+    from mywebsite.forms import homeworkform
+
+    tlist = web_user.objects.all().order_by("tid")
+    today = strftime("%Y-%m-%d", localtime(time()))
+    errorcode = False
+    postbody = request.POST.getlist("homework")
+    if postbody[1] == "":
+        errorcode = True
+    web_html.author = request.POST.get
+    print(dir(request))
+    print(dir(request.POST))
+    print(request.POST)
+    print(request.POST.getlist("homework"))
+    print(request.POST.keys())
+    print(request.method)
+    return render(request, "hwsubmit.html", {'tlist':tlist, 'today':today, 'errorcode':errorcode})

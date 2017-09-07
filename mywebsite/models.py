@@ -18,6 +18,15 @@ class web_html(Document):
     urllink = URLField()
     datestr = DateTimeField()
     author = StringField()
+    content = StringField()
 
     def __str__(self):
         return self.title
+
+class web_user(Document):
+    tid = IntField()
+    tname = StringField()
+    course = StringField()
+
+    def __str__(self):
+        return self.tname

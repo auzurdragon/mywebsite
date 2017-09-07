@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container" width=0.8>
+        <form class="form-horizontal" role="form" method="POST">{% csrf_token %}
+            <div class="row">
+                <div class="form-group col-md-2" id="form-author">
+                    <div class="input-group-select">
+                        <label for="basic-title">日期：{{ today }}</label>
+                        <select type="button" class="form-control" name="homework">
+                            {% for item in tlist %}
+                            <option>{{ item.tname }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-md-10 {% if errorcode %} has-error {% endif%}" id="form-title">
+                    <label for="basic-title">标题</label>
+                    <input type="text" class="col-md-3 form-control" id="basic-title" aria-label="..." name="homework">
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="basic-url">链接（选填）</label>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon3">http://</span>
+                    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="homework">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="basic-content">内容</label>
+                <textarea class="form-control" id="basic-content" aria-label="..." name="homework" placeholder="0/200"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">提交</button>
+        </form>
+    </div>
+{% endblock %}
