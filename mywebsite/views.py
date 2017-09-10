@@ -3,7 +3,7 @@
     视图
 """
 
-from django.http import HttpResponse
+# from django.http import HttpResponse
 from django.shortcuts import render
 
 
@@ -28,32 +28,49 @@ def examples(request):
 
 def children(request):
     """视图"""
-    from mywebsite.models import web_html
-    clist = web_html.objects(typeval="children").order_by("-orderid", "-urlid")
-    typeval = request.GET.get("type", "")
-    if typeval:
-        return render(request, "children/%s.html" % request.GET.get("id"))
+    from mywebsite.models import web_homework
+    urlid = request.GET.get("urlid")
+    if urlid:
+        clist = web_homework.objects.filter(urlid=urlid)
+        return render(request, "hwcontent.html", {"clist":clist})
     else:
-        return render(request, "children.html", {'clist':clist})
+        clist = web_homework.objects.all().order_by("-orderid", "-urlid")
+        return render(request, "children.html", {"clist":clist})
 
 def hwsubmit(request):
     """提交"""
-    from mywebsite.models import web_html
+    from mywebsite.models import web_homework
     from mywebsite.models import web_user
     from time import time, localtime, strftime
-    from mywebsite.forms import homeworkform
 
     tlist = web_user.objects.all().order_by("tid")
     today = strftime("%Y-%m-%d", localtime(time()))
-    errorcode = False
-    postbody = request.POST.getlist("homework")
-    if postbody[1] == "":
-        errorcode = True
-    web_html.author = request.POST.get
-    print(dir(request))
-    print(dir(request.POST))
-    print(request.POST)
-    print(request.POST.getlist("homework"))
-    print(request.POST.keys())
-    print(request.method)
-    return render(request, "hwsubmit.html", {'tlist':tlist, 'today':today, 'errorcode':errorcode})
+    postlist = web_homework()
+    errmsg = []
+    if request.method == "POST":
+        pd = request.POST.getlist("homework")
+        postlist.urlid = str(int(time()))
+        postlist.title = pd[1]
+        postlist.author = pd[0].split(',')[1]
+        postlist.course = pd[0].split(',')[0]
+        postlist.urllink = pd[2]
+        postlist.datestr = today
+        postlist.content = "<p>%s</p>" % pd[3].replace("\r\n","</br>")
+        for i in postlist:print(i,",",postlist[i])
+        try:
+            postlist.validate()
+            postlist.save()
+            clist = web_homework.objects.filter(urlid=postlist.urlid)
+            return render(request, "hwcontent.html", {"clist":clist})
+        except Exception as e:
+            for i in e.errors: errmsg.append("%s : %s" % (i, e.errors[i]))
+            print(errmsg)
+    else:
+        postlist.urlid = str(0)
+        postlist.title = ""
+        postlist.author = ""
+        postlist.course = ""
+        postlist.urllink = ""
+        postlist.content = ""
+        postlist.datestr = today        
+    return render(request, "hwsubmit.html", {"tlist":tlist, "today":today, "postlist":postlist, "errmsg":errmsg})

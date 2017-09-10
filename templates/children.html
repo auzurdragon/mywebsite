@@ -12,7 +12,7 @@
                     <a class="list-group-item" href="{{ item.urllink }}" target="_blank">
                         {{ item.title }}
                 {% else %}
-                    <a class="list-group-item" href="?type={{ item.typeval }}&id={{ item.urlid }}" target="_blank">
+                    <a class="list-group-item" href="?urlid={{ item.urlid }}" target="_blank">
                         {{ item.title }}
                 {% endif %}
                     <div class="label label-default">{{ item.author }}</div>                        

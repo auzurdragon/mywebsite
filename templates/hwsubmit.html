@@ -8,29 +8,48 @@
                         <label for="basic-title">日期：{{ today }}</label>
                         <select type="button" class="form-control" name="homework">
                             {% for item in tlist %}
-                            <option>{{ item.tname }}</option>
+                            <option value="{{ item.course }},{{ item.tname }}" {% ifequal item.tname postlist.author %}selected="selected"{% endifequal %}>{{ item.tname }}</option>
                             {% endfor %}
                         </select>
                     </div>
                 </div>
                 <div class="form-group col-md-10 {% if errorcode %} has-error {% endif%}" id="form-title">
                     <label for="basic-title">标题</label>
-                    <input type="text" class="col-md-3 form-control" id="basic-title" aria-label="..." name="homework">
-
+                    <input type="text" class="col-md-3 form-control" id="basic-title" aria-label="..." name="homework" value="{{ postlist.title }}">
                 </div>
             </div>
             <div class="form-group">
                 <label for="basic-url">链接（选填）</label>
-                <div class="input-group">
+                <div class="input-group" id="form-url">
                     <span class="input-group-addon" id="basic-addon3">http://</span>
-                    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="homework">
+                    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="homework" value="{{ postlist.urllink }}">
                 </div>
             </div>
             <div class="form-group">
                 <label for="basic-content">内容</label>
-                <textarea class="form-control" id="basic-content" aria-label="..." name="homework" placeholder="0/200"></textarea>
+                <textarea class="form-control" id="basic-content" aria-label="..." name="homework" placeholder="0/200">{{ postlist.content }}</textarea>
             </div>
-            <button type="submit" class="btn btn-primary btn-block">提交</button>
+            <div class="row" role="group">
+                <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                    <div class="btn-group" role="group">
+                        <a type="button" id="btnreturn" class="btn btn-default" href="/children/">返回</a>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button id="btnsubmit" type="submit" class="btn btn-primary">提交</button>
+                    </div>
+                </div>
+            </div>
         </form>
+        <div></div>
+        {% if errmsg %}
+            {% for item in errmsg %}
+            <div class="row">
+                <div class="alert alert-warning" role="alert">
+                    <a href="#" class="close" data-dismiss="alter">&times;</a>
+                    <strong>{{ item }}</strong> 
+                </div>
+            </div>   
+            {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}
