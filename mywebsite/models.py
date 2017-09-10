@@ -10,6 +10,15 @@ class web_user(Document):
     def __str__(self):
         return self.username
 
+class chi_booklist(Document):
+    classid = IntField(required=True)
+    name = StringField(required=True)
+    author = StringField()
+    publisher = StringField()
+
+    def __str__(self):
+        return self.name
+
 class web_homework(Document):
     urlid = IntField(required=True)
     title = StringField(required=True, min_length=1, max_length=200)

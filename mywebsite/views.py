@@ -41,6 +41,12 @@ def syllabus(request):
     """课程表"""
     return render(request, "children/syllabus.html")
 
+def booklist(request):
+    """书目"""
+    from mywebsite.models import chi_booklist
+    clist = chi_booklist.objects.all()
+    return render(request, "children/booklist.html", {"clist":clist})
+
 def hwsubmit(request):
     """提交"""
     from mywebsite.models import web_homework

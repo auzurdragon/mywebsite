@@ -31,4 +31,5 @@ urlpatterns = [
     url(r'^children/$', views.children),
     url(r'^syllabus/$', views.syllabus),
     url(r'^hwsubmit/$', views.hwsubmit),
+    url(r'^booklist/$', views.booklist),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
