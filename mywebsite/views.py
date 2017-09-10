@@ -37,12 +37,15 @@ def children(request):
         clist = web_homework.objects.all().order_by("-orderid", "-urlid")
         return render(request, "children.html", {"clist":clist})
 
+def syllabus(request):
+    """课程表"""
+    return render(request, "children/syllabus.html")
+
 def hwsubmit(request):
     """提交"""
     from mywebsite.models import web_homework
     from mywebsite.models import web_user
     from time import time, localtime, strftime
-
     tlist = web_user.objects.all().order_by("tid")
     today = strftime("%Y-%m-%d", localtime(time()))
     postlist = web_homework()

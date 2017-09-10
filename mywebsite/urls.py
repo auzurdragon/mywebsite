@@ -25,9 +25,10 @@ from mywebsite import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.index), # 指定首页为index
+    url(r'^$', views.index),                # 指定首页为index
     url(r'^python/$', views.python),
     url(r'^examples/$', views.examples),
     url(r'^children/$', views.children),
+    url(r'^syllabus/$', views.syllabus),
     url(r'^hwsubmit/$', views.hwsubmit),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
