@@ -12,11 +12,12 @@
         </thead>
         <tbody>
             {% for item in clist %}
-            <tr>
+            <tr onmouseover="this.style.cursor='pointer'" onclick="windows.location.href='http://opac.changshalib.cn/opac/search?searchWay=title&q={{ item.name }}'">
                 <td>{{ item.name }}</td>
                 <td>{{ item.author }}</td>
                 <td>{{ item.publisher }}</td>
             </tr>
+            </a>
             {% endfor %}
         </tbody>
     </table>
