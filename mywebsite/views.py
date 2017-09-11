@@ -41,6 +41,10 @@ def syllabus(request):
     """课程表"""
     return render(request, "children/syllabus.html")
 
+def schedule(request):
+    """作息时间表"""
+    return render(request, "children/schedule.html")
+
 def booklist(request):
     """书目"""
     from mywebsite.models import chi_booklist
