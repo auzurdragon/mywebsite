@@ -25,6 +25,16 @@
         <!-- 加载D3 -->
         <!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
         <script src="{% static 'd3/d3.min.js' %}"></script>
+        <!-- 百度网站统计代码 -->
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+              var hm = document.createElement("script");
+              hm.src = "https://hm.baidu.com/hm.js?4b9e0f131dc3ed28fc9e760c5f9f0725";
+              var s = document.getElementsByTagName("script")[0]; 
+              s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
         <title>{% block title %}淡墨青衫-书山有路勤为径, 学海无涯苦作舟{% endblock %}</title>
     </head>
     <body>
