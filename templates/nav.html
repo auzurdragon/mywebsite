@@ -1,5 +1,15 @@
 <div class="contianer nav" role="navigation" style="margin:1%">
-    <nav class="navbar navbar-default" role="navigation">
+    <nav class="navbar navbar-inverse" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>            
+            </button>
+            <a class="navbar-brand" href="/">首页</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
         <!-- <div class="container-fluid"> -->
             <!--  -->
 
@@ -13,12 +23,9 @@
                 .navbar-inverse ,反色效果, 黑底白字
                 .navbar-fixed-top, 固定在顶部
             -->
-            <div class="navbar navbar-inverse">
                 <ul class="nav navbar-nav">
                     <!-- li.active标记为活跃 -->
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="/">首页</a>
-                    </div>                        
+                     
                     <li><a href="/examples/">实例</a></li>
                     <!-- 在导航条中增加一个下拉菜单 -->
                     <li class="dropdown">
@@ -62,7 +69,6 @@
                     </div>
                     <button type="submit" class="btn btn-default">搜索</button>
                 </form> -->
-            </div>
-        <!-- </div> -->
+        </div>
     </nav>
 </div>
