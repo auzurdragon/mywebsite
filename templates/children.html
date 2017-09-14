@@ -12,10 +12,10 @@
             <ul class="list-group">
                 {% for item in clist %}
                     {% if item.urllink %}
-                    <a class="list-group-item" href="{{ item.urllink }}" target="_blank">
+                    <a class="list-group-item" href="{{ item.urllink }}">
                         {{ item.title }}
                     {% else %}
-                    <a class="list-group-item" href="?urlid={{ item.urlid }}" target="_blank">
+                    <a class="list-group-item" href="?urlid={{ item.urlid }}">
                         {{ item.title }}
                     {% endif %}
                         <div class="label label-default">{{ item.author }}</div>                        
