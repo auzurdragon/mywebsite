@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container body">
+    {% if clist %}
+    <ul class="list-group">
+        {% for item in clist %}
+        <a class="list-group-item" href="{{ item.detail_info.detail_url }}">
+            <div>{{ item.name }}
+                <span style="float:right">地址：{{ item.address }}</span>
+            </div>
+        </a>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <div class="row">
+        <div class="col-md-3" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='/chisearch?query=图书馆'" >
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <H4 class="panel-title">图书馆</H4>
+                </div>
+                <div class="panel-body">
+                    <p>搜索东郡小学附近的图书馆。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

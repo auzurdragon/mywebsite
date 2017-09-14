@@ -51,6 +51,19 @@ def booklist(request):
     clist = chi_booklist.objects.all()
     return render(request, "children/booklist.html", {"clist":clist})
 
+def chisearch(request):
+    """学校附近搜索"""
+    qword = request.GET.get("query")
+    from mywebsite.API.SearchAPI import SearchAPI
+    if qword == "":
+        clist = ""
+    else:
+        r = SearchAPI()
+        r.s_library(qword)
+        clist = r.result
+        print(clist)
+    return render(request, "children/search.html", {"clist":clist})
+
 def hwsubmit(request):
     """提交"""
     from mywebsite.models import web_homework

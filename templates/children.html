@@ -1,24 +1,28 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="container" id="children" width=0.8>
-        <div class="btn-toolbar" role="toolbar" aria-label="...">
-            <a type="button" class="btn btn-primary" style="float: right" href="/hwsubmit/">添加
-            </a>
+    <div class="container" id="children" width=0.8 >
+        <div class="row col-md-12">
+            <div class="btn-toolbar" role="toolbar" aria-label="...">
+                <a type="button" class="btn btn-primary" style="float: right" href="/hwsubmit/">添加
+                </a>
+            </div>
         </div>
-        <ul class="list-group">
-            {% for item in clist %}
-                {% if item.urllink %}
+        <div class="row col-md-12">
+            <ul class="list-group">
+                {% for item in clist %}
+                    {% if item.urllink %}
                     <a class="list-group-item" href="{{ item.urllink }}" target="_blank">
                         {{ item.title }}
-                {% else %}
+                    {% else %}
                     <a class="list-group-item" href="?urlid={{ item.urlid }}" target="_blank">
                         {{ item.title }}
-                {% endif %}
-                    <div class="label label-default">{{ item.author }}</div>                        
-                    <p style="float:right">{{ item.datestr }}</p>
-                </a>
-            {% endfor %}
-        </ul>
+                    {% endif %}
+                        <div class="label label-default">{{ item.author }}</div>                        
+                        <p style="float:right">{{ item.datestr }}</p>
+                    </a>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 {% endblock %}
