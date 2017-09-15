@@ -31,7 +31,7 @@ def children(request):
     from mywebsite.models import web_homework
     urlid = request.GET.get("urlid")
     if urlid:
-        clist = web_homework.objects.filter(urlid=urlid)
+        clist = web_homework.objects.filter(urlid=urlid, classof=0)
         return render(request, "hwcontent.html", {"clist":clist})
     else:
         clist = web_homework.objects.all().order_by("-orderid", "-urlid")

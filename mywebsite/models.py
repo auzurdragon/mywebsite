@@ -21,6 +21,7 @@ class chi_booklist(Document):
 
 class web_homework(Document):
     urlid = IntField(required=True)
+    classof = IntField(required=True, default=int(0))
     title = StringField(required=True, min_length=1, max_length=200)
     author = StringField(required=True)
     course = StringField()
