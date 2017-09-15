@@ -34,7 +34,7 @@ def children(request):
         clist = web_homework.objects.filter(urlid=urlid, classof=0)
         return render(request, "hwcontent.html", {"clist":clist})
     else:
-        clist = web_homework.objects.all().order_by("-orderid", "-urlid")
+        clist = web_homework.objects.filter(classof=0).order_by("-orderid", "-urlid")
         return render(request, "children.html", {"clist":clist})
 
 def syllabus(request):
@@ -76,6 +76,7 @@ def hwsubmit(request):
     if request.method == "POST":
         pd = request.POST.getlist("homework")
         postlist.urlid = str(int(time()))
+        postlist.classof = int(0)
         postlist.title = pd[1]
         postlist.author = pd[0].split(',')[1]
         postlist.course = pd[0].split(',')[0]
