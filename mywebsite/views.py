@@ -76,14 +76,14 @@ def hwsubmit(request):
     if request.method == "POST":
         pd = request.POST.getlist("homework")
         postlist.urlid = str(int(time()))
-        postlist.classof = int(0)
-        postlist.title = pd[1]
+        postlist.classof = int(pd[1])
+        postlist.title = pd[2]
         postlist.author = pd[0].split(',')[1]
         postlist.course = pd[0].split(',')[0]
-        postlist.urllink = pd[2]
+        postlist.urllink = pd[3]
         postlist.datestr = today
-        postlist.content = "<p>%s</p>" % pd[3].replace("\r\n","</br>")
-        for i in postlist:print(i,",",postlist[i])
+        postlist.content = "<p>%s</p>" % pd[4].replace("\r\n","</br>")
+        for i in postlist:print(i," ,",postlist[i])
         try:
             postlist.validate()
             postlist.save()
@@ -101,3 +101,34 @@ def hwsubmit(request):
         postlist.content = ""
         postlist.datestr = today        
     return render(request, "hwsubmit.html", {"tlist":tlist, "today":today, "postlist":postlist, "errmsg":errmsg})
+
+def pinyin(request):
+    """"""
+    from mywebsite.models import web_homework
+    from xpinyin import Pinyin
+    pinyin = Pinyin()
+    urlid = request.GET.get("urlid")
+    if not urlid:
+        clist = list(web_homework.objects.filter(classof=3).order_by("-orderid", "-urlid"))
+        print(type(clist))
+        for item in clist:
+            item.title = [{"word":j, "pinyin":pinyin.get_pinyin(j, show_tone_marks=True)} for j in item.title]
+        ctype = False
+    else:
+        clist = list(
+            web_homework.objects.filter(classof=3, urlid=urlid).order_by("-orderid", "-urlid")
+            )[0]
+        clist.title = [
+            {"word":j,
+             "pinyin":pinyin.get_pinyin(j, show_tone_marks=True)}
+            for j in clist.title
+        ]
+        tmp = clist.content[3:-4].split("</br>")
+        clist.author = [{"word":j, "pinyin":pinyin.get_pinyin(j, show_tone_marks=True)} for j in tmp[0]]
+        clist.content = [
+            [{"word":j, "pinyin":pinyin.get_pinyin(j, show_tone_marks=True)} for j in i]
+            for i in tmp[1:]
+            ]
+        ctype = True
+    return render(request, 'children/pinyin.html', {"ctype":ctype, "clist":clist})
+

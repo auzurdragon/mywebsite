@@ -13,6 +13,16 @@
                         </select>
                     </div>
                 </div>
+                <div class="form-group col-md-2" id="form-classof">
+                    <div class="input-group-select">
+                        <label for="basic-title">类型：</label>
+                        <select type="button" class="form-control" name="homework">
+                            <option value=0>作业</option>
+                            <option value=1>通知</option>
+                            <option value=3>儿歌</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="form-group col-md-10 {% if errorcode %} has-error {% endif%}" id="form-title">
                     <label for="basic-title">标题</label>
                     <input type="text" class="col-md-3 form-control" id="basic-title" aria-label="..." name="homework" value="{{ postlist.title }}">

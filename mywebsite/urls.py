@@ -34,4 +34,5 @@ urlpatterns = [
     url(r'^booklist/$', views.booklist),
     url(r'^schedule/$', views.schedule),
     url(r'chisearch/$', views.chisearch),
+    url(r'pinyin/$', views.pinyin),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
