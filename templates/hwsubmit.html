@@ -29,15 +29,15 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="basic-content">内容</label>
+                <textarea class="form-control" id="basic-content" rows="8" aria-label="..." name="homework" placeholder="0/200">{{ postlist.content }}</textarea>
+            </div>
+            <div class="form-group">
                 <label for="basic-url">链接（选填）</label>
                 <div class="input-group" id="form-url">
                     <span class="input-group-addon" id="basic-addon3">http://</span>
                     <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="homework" value="{{ postlist.urllink }}">
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="basic-content">内容</label>
-                <textarea class="form-control" id="basic-content" aria-label="..." name="homework" placeholder="0/200">{{ postlist.content }}</textarea>
             </div>
             <div class="row column" role="group">
                 <div class="btn-group btn-group-justified" role="group" aria-label="...">

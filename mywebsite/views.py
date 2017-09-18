@@ -29,7 +29,7 @@ def examples(request):
 def children(request):
     """视图"""
     from mywebsite.models import web_homework
-    from time import time, localtime, strftime
+    from time import time
     urlid = request.GET.get("urlid")
     if urlid:
         clist = web_homework.objects.filter(urlid=urlid, classof=0)
