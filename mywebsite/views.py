@@ -29,12 +29,13 @@ def examples(request):
 def children(request):
     """视图"""
     from mywebsite.models import web_homework
+    from time import time, localtime, strftime
     urlid = request.GET.get("urlid")
     if urlid:
         clist = web_homework.objects.filter(urlid=urlid, classof=0)
         return render(request, "hwcontent.html", {"clist":clist})
     else:
-        clist = web_homework.objects.filter(classof=0).order_by("-orderid", "-urlid")
+        clist = web_homework.objects.filter(classof=0, urlid__gte=(time()-86400*7)).order_by("-orderid", "-urlid")
         return render(request, "children.html", {"clist":clist})
 
 def syllabus(request):
