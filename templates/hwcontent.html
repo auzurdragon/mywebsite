@@ -4,11 +4,11 @@
     <div class="container">
         <div class="row">
             {% for item in clist %}
-            <div class="col-md-4">
+            <div class="col-md-4" {% if item.urllink %}onmouseover="this.style.cursor='pointer'" onclick="window.location.href='{{ item.urllink }}'"{% endif %}>
                 <div class="panel panel-primary">
-                    <div class="panel panel-heading">{{ item.course }}：{{ item.datestr }}</div>
+                    <div class="panel panel-heading">{{ item.title }}<div style="float:right">{{ item.datestr }}</div></div>
                     <div class="panel panel-body">{% autoescape off %}{{ item.content }}{% endautoescape %}</div>
-                    <div class="panel panel-footer" style="text-align:right">{{ item.author }}</div>
+                    <div class="panel panel-footer">{{ item.course }}<div style="float:right">{{ item.author }}</div></div>
                 </div>
             </div>
             {% endfor %}
