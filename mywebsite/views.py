@@ -82,9 +82,8 @@ def hwsubmit(request):
         postlist.author = pd[0].split(',')[1]
         postlist.course = pd[0].split(',')[0]
         postlist.content = "<p>%s</p>" % pd[3].replace("\r\n","</br>")
-        postlist.urllink = "http://%s" % pd[4]
+        postlist.urllink = pd[4]
         postlist.datestr = today
-        for i in postlist:print(i," ,",postlist[i])
         try:
             postlist.validate()
             postlist.save()

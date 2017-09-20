@@ -25,7 +25,7 @@ class web_homework(Document):
     title = StringField(required=True, min_length=1, max_length=200)
     author = StringField(required=True)
     course = StringField()
-    urllink = URLField()
+    urllink = StringField()
     datestr = StringField(required=True)
     content = StringField(min_length=5)
     orderid = IntField()
