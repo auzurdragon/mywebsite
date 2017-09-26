@@ -2,14 +2,6 @@
 """模型"""
 from mongoengine import Document, StringField, IntField, URLField, DateTimeField,ListField,ReferenceField,EmbeddedDocumentListField
 
-class web_user(Document):
-    username = StringField(required=True)
-    pwd = StringField(max_length=100)
-    role = StringField(max_length=500)
-
-    def __str__(self):
-        return self.username
-
 class chi_booklist(Document):
     classid = IntField(required=True)
     name = StringField(required=True)
@@ -49,8 +41,12 @@ class web_html(Document):
 
 class web_user(Document):
     tid = IntField()
+    username = StringField()
+    pwd = StringField()
     tname = StringField()
     course = StringField()
+    mobile = StringField()
+    # email = StringField()
 
     def __str__(self):
         return self.tname
