@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container col-md-6 col-md-offset-3" width=0.4>
+    <form class="form-horizontal" role="form" method="POST">{% csrf_token %}
+        <div class="input-group" id="form-username">
+            <label class="input-group-addon" for="username">账号</label>
+            <input type="text" class="form-control" id="username" area-label="..." name="username">
+        </div>
+        <div></br></div>
+        <div class="input-group" id="form-password">
+            <label class="input-group-addon" for="password">密码</label>
+            <!-- type="password" 指定密码输入样式，即隐藏输入内容 -->
+            <input type="password" class="form-control" id="password" area-label="..." name="password">
+        </div>
+        <div></br></div>
+        <div class="btn-group btn-group-justified">
+            <div class="btn-group">
+                <a type="button" id="return" class="btn btn-default" href="/login">返回</a>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-primary" type="submit">提交</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

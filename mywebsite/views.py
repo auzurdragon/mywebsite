@@ -3,8 +3,28 @@
     视图
 """
 
-# from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+
+def login(request):
+    from mywebsite.models import web_user
+    if request.method == "POST":
+        # 获取表单用户密码
+        username = request.POST["username"]
+        password = request.POST["password"]
+        print(username, password)
+        # 获取表单数据与数据进行比较
+        user = web_user.objects.filter(username__exact = username, pwd__exact = password )
+        if user:
+            # 比较成功，跳转首页
+            response = HttpResponseRedirect('/hwsubmit')
+            # 将username写入浏览器cookie，失效时间为3600
+            response.set_cookie("username", username, 3600)
+            return response
+        else:
+            # 比较失败，停止在login
+            return HttpResponseRedirect("/login")
+    return render(request, "login.html")
 
 
 def index(request):
@@ -70,37 +90,41 @@ def hwsubmit(request):
     from mywebsite.models import web_homework
     from mywebsite.models import web_user
     from time import time, localtime, strftime
-    tlist = web_user.objects.all().order_by("tid")
-    today = strftime("%Y-%m-%d", localtime(time()))
-    postlist = web_homework()
-    errmsg = []
-    if request.method == "POST":
-        pd = request.POST.getlist("homework")
-        postlist.urlid = str(int(time()))
-        postlist.classof = int(pd[1])
-        postlist.title = pd[2]
-        postlist.author = pd[0].split(',')[1]
-        postlist.course = pd[0].split(',')[0]
-        postlist.content = "<p>%s</p>" % pd[3].replace("\r\n","</br>")
-        postlist.urllink = pd[4]
-        postlist.datestr = today
-        try:
-            postlist.validate()
-            postlist.save()
-            clist = web_homework.objects.filter(urlid=postlist.urlid)
-            return render(request, "hwcontent.html", {"clist":clist})
-        except Exception as e:
-            for i in e.errors: errmsg.append("%s : %s" % (i, e.errors[i]))
-            print(errmsg)
+    if not request.COOKIES.get("username", ""):
+        print(request.COOKIES.get("username", ""))
+        return HttpResponseRedirect("/login")
     else:
-        postlist.urlid = str(0)
-        postlist.title = ""
-        postlist.author = ""
-        postlist.course = ""
-        postlist.urllink = ""
-        postlist.content = ""
-        postlist.datestr = today        
-    return render(request, "hwsubmit.html", {"tlist":tlist, "today":today, "postlist":postlist, "errmsg":errmsg})
+        tlist = web_user.objects.all().order_by("tid")
+        today = strftime("%Y-%m-%d", localtime(time()))
+        postlist = web_homework()
+        errmsg = []
+        if request.method == "POST":
+            pd = request.POST.getlist("homework")
+            postlist.urlid = str(int(time()))
+            postlist.classof = int(pd[1])
+            postlist.title = pd[2]
+            postlist.author = pd[0].split(',')[1]
+            postlist.course = pd[0].split(',')[0]
+            postlist.content = "<p>%s</p>" % pd[3].replace("\r\n","</br>")
+            postlist.urllink = pd[4]
+            postlist.datestr = today
+            try:
+                postlist.validate()
+                postlist.save()
+                clist = web_homework.objects.filter(urlid=postlist.urlid)
+                return render(request, "hwcontent.html", {"clist":clist})
+            except Exception as e:
+                for i in e.errors: errmsg.append("%s : %s" % (i, e.errors[i]))
+                print(errmsg)
+        else:
+            postlist.urlid = str(0)
+            postlist.title = ""
+            postlist.author = ""
+            postlist.course = ""
+            postlist.urllink = ""
+            postlist.content = ""
+            postlist.datestr = today        
+        return render(request, "hwsubmit.html", {"tlist":tlist, "today":today, "postlist":postlist, "errmsg":errmsg})
 
 def pinyin(request):
     """"""
