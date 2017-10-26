@@ -29,6 +29,10 @@ def login(request):
 
 def index(request):
     """index 首页"""
+    print(dir(request))
+    print(dir(request.META))
+    print(request.META)
+    print(request.META["HTTP_USER_AGENT"])
     return render(request, 'index.html')
 
 def python(request):
