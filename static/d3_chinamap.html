@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
             <meta charset="utf-8">
-            <title>D3JS学习：中国地图绘制</title>
+            <title>D3JS学习：地图绘制</title>
             <script type="text/javascript" src="d3/d3.js"></script>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <!-- 引入 Bootstrap -->
@@ -17,8 +17,11 @@
                 -->
     </head>
     <body>
+        <!-- 指定container大小，以实现自适应 -->
+        <div class="container" style="width:80%;">
         <h2>示例</h2>
             <div class="chinamap"></div>
+            <div class="englandmap"></div>
         <h2>GeoJSON介绍</h2>
         <p>GeoJSON是一种对各种地理数据结构进行编码的格式。</p>
         <p>GeoJSON对象可以表示几何、特征或者特征集合。</p>
@@ -179,10 +182,24 @@ d3.json("china.json", function(error, root){
             .on("mouseout", function(d, i){d3.select(this).transition().duration(500).attr("fill", "#FF8400").attr("stroke-width", 1)});
     });                
             </pre>
-        
+        <h4>svg图形自适应窗口大小</h4>
+            <pre>
+&lt;div class="container" style="width:80%"&gt;
+    ...
+&lt;/div&gt;
+            </pre>
+            <p>使用div.container包装svg，以指定svg的大小</p>
+            <pre>
+var svg = d3.select(".container")
+            .append("svg")
+            .attr("preserveAspectRatio", "xMidYMid meet")
+            .attr("viewBox", "0 0 400 400")
+            </pre>
+            <p>使用<code>preserveAspectRatio</code>和<code>viewBox</code>指定svg的属性，代替通常的<code>width</code>和<code>height</code></p>
+        </div>
         <script type="text/javascript">
             // 定义svg宽高
-            var width = 1000, height = 800;
+            var width = "xMidYMid meet", height = "0 0 800 600";
             // 定义投影函数
             var projection = d3.geoMercator()
                                 .center([110, 40])
@@ -190,11 +207,11 @@ d3.json("china.json", function(error, root){
             // 定义path函数
             var path = d3.geoPath()
                         .projection(projection);
-            // 创建svg
+            // 创建svg，使用preserveAspectRatio和viewBox方法代替width，实现自适应
             var svg = d3.select("body div.chinamap")
                         .append("svg")
-                        .attr("width", width)
-                        .attr("height", height);
+                        .attr("preserveAspectRatio", width)
+                        .attr("viewBox", height);
             // 使用d3.json()读取地图数据，并绘制各省地图
             d3.json("china.json", function(error, root){
                 if (error)
