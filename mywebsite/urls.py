@@ -36,4 +36,5 @@ urlpatterns = [
     url(r'chisearch/$', views.chisearch),
     url(r'pinyin/$', views.pinyin),
     url(r'^login/$', views.login),
+    url(r'^test/$', views.test),            # 返回request测试结果
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

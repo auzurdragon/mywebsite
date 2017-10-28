@@ -29,10 +29,6 @@ def login(request):
 
 def index(request):
     """index 首页"""
-    print(dir(request))
-    print(dir(request.META))
-    print(request.META)
-    print(request.META["HTTP_USER_AGENT"])
     return render(request, 'index.html')
 
 def python(request):
@@ -160,3 +156,15 @@ def pinyin(request):
         ctype = True
     return render(request, 'children/pinyin.html', {"ctype":ctype, "clist":clist})
 
+def test(request):
+    import json
+    request_data = {}
+    request_data['request_class'] = dir(request)
+    request_data['path'] = request.path
+    request_data['host'] = request.get_host()
+    request_data['cookies'] = request.COOKIES
+    request_data['method'] = request.method
+    request_data['get'] = request.GET
+    request_data['post'] = request.POST
+    print(request_data)
+    return HttpResponse(json.dumps(request_data), content_type="application/json")
