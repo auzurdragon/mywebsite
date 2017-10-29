@@ -158,6 +158,8 @@ def pinyin(request):
 
 def test(request):
     import json
+    response = HttpResponse()
+    response.write('{% csrf_token %}')
     request_data = {}
     request_data['request_class'] = dir(request)
     request_data['path'] = request.path
@@ -166,5 +168,11 @@ def test(request):
     request_data['method'] = request.method
     request_data['get'] = request.GET
     request_data['post'] = request.POST
+    response.write(json.dumps(request_data))
     print(request_data)
-    return HttpResponse(json.dumps(request_data), content_type="application/json")
+    return HttpResponse(response)
+
+def wxopen(request):
+    """微信公众号接口验证"""
+    echostr = request.GET.get('echostr')
+    return HttpResponse(echostr)
