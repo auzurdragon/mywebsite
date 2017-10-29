@@ -37,5 +37,5 @@ urlpatterns = [
     url(r'pinyin/$', views.pinyin),
     url(r'^login/$', views.login),
     url(r'^test/$', views.test),            # 返回request测试结果
-    url(r'wxopen/$', views.wxopen),         # 微信接口验证
+    url(r'wxopen$', views.wxopen),         # 微信接口验证
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
