@@ -200,13 +200,8 @@ var svg = d3.select(".container")
         <script type="text/javascript">
             // 定义svg宽高
             var width = "xMidYMid meet", height = "0 0 800 600";
-            // 定义投影函数
-            var projection = d3.geoMercator()
-                                .center([110, 40])
-                                .scale(700);
-            // 定义path函数
-            var path = d3.geoPath()
-                        .projection(projection);
+
+
             // 创建svg，使用preserveAspectRatio和viewBox方法代替width，实现自适应
             var svg = d3.select("body div.chinamap")
                         .append("svg")
@@ -217,6 +212,10 @@ var svg = d3.select(".container")
                 if (error)
                     return console.error(error);
                 console.log(root.features);
+                // 定义投影函数
+                var projection = d3.geoMercator().center([110, 40]).scale(700);
+                // 定义path函数
+                var path = d3.geoPath().projection(projection);
                 // 获得geoJSON中的features字的数据，使用.path()绘制各省地图
                 svg.selectAll("path")
                     .data(root.features)
@@ -240,7 +239,8 @@ var svg = d3.select(".container")
                                 .attr("fill", "red")
                                 .attr("stroke-width",2);})
                     // 绑定鼠标移出时的事件
-                    .on("mouseout", function(d, i){d3.select(this).transition().duration(500).attr("fill", "#FF8400").attr("stroke-width", 1)});
+                    .on("mouseout", function(d, i){
+                        d3.select(this).transition().duration(500).attr("fill", "#FF8400").attr("stroke-width", 1);});
             });
         </script>
     </body>

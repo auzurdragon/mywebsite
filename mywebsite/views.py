@@ -173,6 +173,17 @@ def test(request):
     return HttpResponse(response)
 
 def wxopen(request):
-    """微信公众号接口验证"""
+    """微信公众号接口验证""" 
     echostr = request.GET.get('echostr')
+    print(dir(request.GET))
     return HttpResponse(echostr)
+
+def note(request, classstr):
+    """加载笔记列表"""
+    classstr = classstr.lower()
+    print(classstr)
+    if classstr in ['python', 'd3js']:
+        return HttpResponse('hello')
+    else:
+        return HttpResponseRedirect('/')
+    
