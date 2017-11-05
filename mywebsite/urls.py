@@ -22,7 +22,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 # 加载mywebsite下的views视图文件
 from mywebsite import views
-
+from mycms import views as cmsviews
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index),                # 指定首页为index
@@ -37,5 +37,7 @@ urlpatterns = [
     url(r'pinyin/$', views.pinyin),
     url(r'^login/$', views.login),
     url(r'^test/$', views.test),            # 返回request测试结果
-    url(r'wxopen$', views.wxopen),         # 微信接口验证
+    url(r'wxopen$', views.wxopen),         # 微信接口验证，注意不能使用wxopen/$
+    # 管理后台
+    url(r'cms/$', cmsviews.index),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mywebsite',
     'examples',
+    'mycms',                        # 管理后台
 ]
 
 MIDDLEWARE = [
@@ -63,7 +64,7 @@ TEMPLATES = [
         'DIRS': [   # 指定模板加载路径
             'templates/',             # 绝对路径, <webroot>/templates
             '/var/www/mywebsite/templates/',    # 服务器端的模板目录路径
-            # os.path.join(os.path.dirname(__file__), 'templates').replace('\\', '/') # 相对路径
+            os.path.join(os.path.dirname(__file__), 'templates').replace('\\', '/') # 相对路径,各应用模板路径的关键
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -130,12 +131,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+# 映射到静态文件的url
 STATIC_URL = '/static/'
 
+# 存放各个app的static和公共static目录
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
     'static/',
+    'mycms/static/',
 ]
 
-# 设置生产环境的静态文件目录
+# 设置生产环境的静态文件目录，使用python manage.py collectstatic可以把开发环境各个静态文件收集到该目录，交由http服务统一管理
 STATIC_ROOT = "/var/www/static/"
