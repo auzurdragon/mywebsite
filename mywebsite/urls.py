@@ -37,12 +37,9 @@ urlpatterns = [
     url(r'pinyin/$', views.pinyin),
     url(r'^login/$', views.login),
     url(r'^test/$', views.test),            # 返回request测试结果
-<<<<<<< HEAD
     url(r'wxopen/$', views.wxopen),         # 微信接口验证
     url(r'^note/(?P<classstr>[a-zA-Z]*)/$', views.note)      # 查询笔记
-=======
     url(r'wxopen$', views.wxopen),         # 微信接口验证，注意不能使用wxopen/$
     # 管理后台
     url(r'cms/$', cmsviews.index),
->>>>>>> 93fd554f27d6cadeb5c0e9d8d866204bfc2f0279
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
