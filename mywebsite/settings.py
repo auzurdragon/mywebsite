@@ -142,4 +142,4 @@ STATICFILES_DIRS = [
 ]
 
 # 设置生产环境的静态文件目录，使用python manage.py collectstatic可以把开发环境各个静态文件收集到该目录，交由http服务统一管理
-STATIC_ROOT = "/var/www/static/"
+STATIC_ROOT = "/var/www/mywebsite/collectstatic/"
