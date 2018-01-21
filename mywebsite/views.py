@@ -210,8 +210,9 @@ def mycase(request, casename):
             with open(casefile, encoding='utf8') as reader:
                 item['caseinfo'] = reader.readline()[5:-5]    # 读取文件第一行中<!-- --> 中的内容作为说明
         print(caselist)
-        return render(request, 'caselist.html',{'caselist':caselist})
+        return render(request, 'caselist.html', {'caselist':caselist})
 def rootauth(request):
-    root = open('root.txt', 'rb').read()
-    print(root)
+    """ 阿里验证 """
+    with open('root.txt', 'rb') as reader:
+        root = reader.read()
     return HttpResponse(root)
