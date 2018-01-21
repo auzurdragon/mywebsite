@@ -156,34 +156,62 @@ def pinyin(request):
         ctype = True
     return render(request, 'children/pinyin.html', {"ctype":ctype, "clist":clist})
 
+from django.views.decorators.csrf import csrf_exempt
+@csrf_exempt
 def test(request):
+    """get和post测试接口"""
     import json
-    response = HttpResponse()
-    response.write('{% csrf_token %}')
     request_data = {}
-    request_data['request_class'] = dir(request)
+    request_data['request_class'] = list(dir(request))
     request_data['path'] = request.path
-    request_data['host'] = request.get_host()
-    request_data['cookies'] = request.COOKIES
     request_data['method'] = request.method
-    request_data['get'] = request.GET
-    request_data['post'] = request.POST
-    response.write(json.dumps(request_data))
-    print(request_data)
-    return HttpResponse(response)
-
+    if request.method == 'POST':
+        request_data['body'] = request.body
+        print(request_data, sep='\n')
+        print(request.POST)
+        return HttpResponse(json.dumps(request_data), content_type='application/json')
+    else:
+        request_data['parameter'] = request.GET
+        return HttpResponse(json.dumps(request_data), content_type='application/json')
+    
 def wxopen(request):
     """微信公众号接口验证""" 
     echostr = request.GET.get('echostr')
     print(dir(request.GET))
     return HttpResponse(echostr)
 
-def note(request, classstr):
-    """加载笔记列表"""
-    classstr = classstr.lower()
-    print(classstr)
-    if classstr in ['python', 'd3js']:
-        return HttpResponse('hello')
+def applications(request):
+    """加载应用列表页面"""
+    return render(request, 'applications.html')
+
+def mycase(request, casename):
+    """
+        加载实例网页
+        使用get请求eid加载指定文件名.html的实例
+    """
+    import os
+    from time import localtime, strftime
+    casepath = 'templates/mycase/'
+    print(casename)
+    casename = casename.lower()
+    # 获得实例文件名
+    caselist = [i.lower() for i in os.listdir(casepath)]
+    print(caselist)
+    # 如eid文件名存在则加载实例文件，否则加载实例列表。
+    if casename in caselist:
+        return render(request, 'mycase/' + casename)
     else:
-        return HttpResponseRedirect('/')
-    
+        caselist = [{'casename':i} for i in caselist]
+        for item in caselist:
+            # 获得文件最近修改时间
+            casefile = casepath + item['casename']
+            ctime = os.path.getmtime(casefile)
+            item['caseupdate'] = strftime('%Y-%m-%d', localtime(ctime))
+            with open(casefile, encoding='utf8') as reader:
+                item['caseinfo'] = reader.readline()[5:-5]    # 读取文件第一行中<!-- --> 中的内容作为说明
+        print(caselist)
+        return render(request, 'caselist.html',{'caselist':caselist})
+def rootauth(request):
+    root = open('root.txt', 'rb').read()
+    print(root)
+    return HttpResponse(root)

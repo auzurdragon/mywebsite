@@ -38,8 +38,11 @@ urlpatterns = [
     url(r'^login/$', views.login),
     url(r'^test/$', views.test),            # 返回request测试结果
     url(r'wxopen/$', views.wxopen),         # 微信接口验证
-    url(r'^note/(?P<classstr>[a-zA-Z]*)/$', views.note),      # 查询笔记
     url(r'wxopen$', views.wxopen),         # 微信接口验证，注意不能使用wxopen/$
+    url(r'mycase/([\w.]{0,20})$', views.mycase),   # 传递()中的数字、字母和下划线字符给mycase()
+    url(r'^applications/$', views.applications),  # 我的应用
     # 管理后台
     url(r'cms/$', cmsviews.index),
+    # root.txt文件验证，阿里
+    url(r'root.txt', views.rootauth),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

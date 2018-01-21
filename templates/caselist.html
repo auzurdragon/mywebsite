@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class='container body'>
+        <table class='table table-hover'>
+            <thead>
+                <tr>
+                    <th>文件名称</th>
+                    <th>介绍</th>
+                    <th>更新日期</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in caselist %}
+                <tr onmouseover='this.style.cursor="pointer"' onclick='window.open("{{ item.casename }}")'>
+                    <td>{{ item.casename }}</td>
+                    <td>{{ item.caseinfo }}</td>
+                    <td>{{ item.caseupdate }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
+
+

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container body">
+    <div class="row">
+        <div class="col-md-3" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='/children/'" >
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <H4 class="panel-title">微信</H4>
+                </div>
+                <div class="panel-body">
+                    <p>好友统计</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='/schedule/'" >
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <H4 class="panel-title">淘宝</H4>
+                </div>
+                <div class="panel-body">
+                    <ul><a href="#"><p>好券查询</p></a></ul>
+                    <ul><a href="#">好券查询</a></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
