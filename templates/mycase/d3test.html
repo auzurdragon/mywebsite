@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf8">
+        <script type="text/javascript" src="../../static/d3/d3.js"></script>
+        <title>D3JS测试</title>
+    </head>
+    <body>
+        <div class="test"></div>
+    </body>
+    <script type="text/javascript">
+        var svg = d3.select("body div.test")
+                    .append("svg")
+                    .attr("width", "100%")
+                    .attr("height", "800");
+    </script>
+</html>
