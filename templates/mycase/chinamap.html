@@ -1,9 +1,10 @@
+<!-- 使用D3JS绘制物流图 -->
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf8">
-        <script type="text/javascript" src="../../static/d3/d3.js"></script>
-        <title>地图</title>
+        <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+        <title>使用D3JS绘制动态地图</title>
     </head>
     <body>
         <div class="fxmap">
@@ -67,6 +68,7 @@
                 .data(mapdata)
                 .enter()
                 .append("path")
+                .attr("id", function(d){return d.properties.name})
                 .attr("d", path);
             // 标记长沙
             gmap.append("circle").attr("id","changsha")
@@ -81,6 +83,9 @@
                 .attr("stroke-width", "2")
                 .attr("fill-opacity", "0");
         });
+        
+        // 创建对象，保存每个城市被发射的次数
+        var citylist = new Object();
         // 创建方法，输入data坐标，绘制发射线
         var moveto = function(city, data){
             var pf = {x:projection([112.59,28.12])[0], y:projection([112.59,28.12])[1]};
@@ -136,8 +141,7 @@
             '南京':[118.77807440802562,32.05723550180587],
             '武昌':[114.35362228468498,30.56486029278519],
         };
-        // 创建对象，保存每个城市被发射的次数
-        var citylist = new Object();
+
         // 随机获得目标城市
         var cityname = [], total = 0;
         for (var key in cityordinate){

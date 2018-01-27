@@ -4,7 +4,8 @@
 """
 
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
+from django.views.decorators.csrf import csrf_exempt
 
 def login(request):
     from mywebsite.models import web_user
@@ -156,7 +157,6 @@ def pinyin(request):
         ctype = True
     return render(request, 'children/pinyin.html', {"ctype":ctype, "clist":clist})
 
-from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def test(request):
     """get和post测试接口"""
@@ -191,26 +191,27 @@ def mycase(request, casename):
     """
     import os
     from time import localtime, strftime
-    casepath = 'templates/mycase/'
+    from mywebsite.models import my_case
     print(casename)
-    casename = casename.lower()
-    # 获得实例文件名
-    caselist = [i.lower() for i in os.listdir(casepath)]
-    print(caselist)
+    # casename = casename.lower()
+    # # 获得实例文件名
+    # caselist = [i.lower() for i in os.listdir(casepath)]
+    # ·print(caselist)
     # 如eid文件名存在则加载实例文件，否则加载实例列表。
-    if casename in caselist:
-        return render(request, 'mycase/' + casename)
-    else:
-        caselist = [{'casename':i} for i in caselist]
-        for item in caselist:
-            # 获得文件最近修改时间
-            casefile = casepath + item['casename']
-            ctime = os.path.getmtime(casefile)
-            item['caseupdate'] = strftime('%Y-%m-%d', localtime(ctime))
-            with open(casefile, encoding='utf8') as reader:
-                item['caseinfo'] = reader.readline()[5:-5]    # 读取文件第一行中<!-- --> 中的内容作为说明
-        print(caselist)
-        return render(request, 'caselist.html', {'caselist':caselist})
+    # if casename in caselist:
+    return render(request, casename)
+    # else:
+    #     caselist = [{'casename':i} for i in caselist]
+    #     for item in caselist:
+    #         # 获得文件最近修改时间
+    #         casefile = casepath + item['casename']
+    #         ctime = os.path.getmtime(casefile)
+    #         item['caseupdate'] = strftime('%Y-%m-%d', localtime(ctime))
+    #         with open(casefile, encoding='utf8') as reader:
+    #             item['caseinfo'] = reader.readline()[5:-5]    # 读取文件第一行中<!-- --> 中的内容作为说明
+    #     print(caselist)
+    #     return render(request, 'caselist.html', {'caselist':caselist})
+
 def rootauth(request):
     """ 阿里验证 """
     with open('root.txt', 'rb') as reader:

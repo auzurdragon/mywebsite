@@ -47,6 +47,15 @@ class web_user(Document):
     course = StringField()
     mobile = StringField()
     # email = StringField()
-
     def __str__(self):
         return self.tname
+
+class my_case(Document):
+    tid = IntField()
+    title = StringField(required=True)
+    filetype = StringField(required=True)
+    datestr = StringField()
+    urllink = URLField()
+
+    def __str__(self):
+        return self.title
