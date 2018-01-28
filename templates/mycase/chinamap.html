@@ -1,4 +1,6 @@
 <!-- 使用D3JS绘制物流图 -->
+
+{% load static from staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -58,7 +60,7 @@
         var changsha = projection([112.59,28.12]);
         // 读取地图数据，并绘制中国地图
         mapdata = [];
-        d3.json('china.json', function(error, data){
+        d3.json('{% static "data/china.json" %}', function(error, data){
             if (error)
                 console.log(error);
             // 读取地图数据
@@ -85,29 +87,38 @@
         });
         
         // 创建对象，保存每个城市被发射的次数
-        var citylist = new Object();
+        var statelist = new Object();
         // 创建方法，输入data坐标，绘制发射线
-        var moveto = function(city, data){
+        var moveto = function(data){
+            // 创建颜色方法，修改省份地图的颜色
+            var colorinter = d3.interpolate(d3.rgb(0,0,0), d3.rgb(255,255,255));
+            var colorlinear = d3.scaleLinear().domain([0, 20]).range([0,1]);
+            // 转换起点（长沙）的经纬度到坐标
             var pf = {x:projection([112.59,28.12])[0], y:projection([112.59,28.12])[1]};
-            var pt = {x:projection(data)[0], y:projection(data)[1]};
+            // 转换目标地点经纬度到坐标
+            var pt = {x:projection(data.L)[0], y:projection(data.L)[1]};
+            // 计算到目标的坐标距离
             var distance = Math.sqrt((pt.x - pf.x)**2 + (pt.y - pf.y)**2);
-            if (city in citylist){
-                citylist[city]++;
+            // 如果已经绘制过连线，则不再绘连线，只绘制发射移动动画
+            if (data.state in statelist){
+                statelist[data.state]++;
             }else{
+                // 绘制从起点向目标延伸的线，使用dash虚线方法，用虚线遮住实线，再移动虚线展示实线逐渐延伸的效果
                 mline.append("line")
                         .attr("x1", pf.x)
                         .attr("y1", pf.y)
                         .attr("x2", pt.x)
                         .attr("y2", pt.y)
-                        .attr("marker-end","url(#pointer)")
-                        .style("stroke-dasharray", " "+distance+", "+distance+" ")
+                        .attr("marker-end","url(#pointer)") // 调用marker标记做为线条的终点样式
+                        .style("stroke-dasharray", " "+distance+", "+distance+" ")  // 定义实线和虚的长度
                         .transition()
                         .duration(distance*30)
-                        .styleTween("stroke-dashoffset", function(){
+                        .styleTween("stroke-dashoffset", function(){    // 虚拟位移
                             return d3.interpolateNumber(distance, 0);
                         });
-                citylist[city] = 1;
+                statelist[data.state] = 1;
             };
+            // 绘制一个圆形，从起点移向目标点
             mline.append("circle")
                 .attr("cx", pf.x)
                 .attr("cy", pf.y)
@@ -116,38 +127,35 @@
                 .duration(distance*30)
                 .attr("transform", "translate("+(pt.x-pf.x)+","+(pt.y-pf.y)+")")
                 .remove();
+            // 修改目标所在省份的填充颜色
+            gmap.select('path#'+data.state)
+                .attr('fill', colorinter(colorlinear(statelist[data.state])));
         };
-        var cityordinate = {
-            '哈尔滨':[126.5416150000,45.8088260000],
-            '石家庄':[116.46,39.92],
-            '北京':[116.39564503787867,39.92998577808024],
-            '上海':[121.480539,31.235929],
-            '广州':[113.271431,23.135336],
-            '重庆':[106.558434,29.568996],
-            '青岛':[120.38442818368189,36.10521490127382],
-            '福州':[119.30347,26.080429],
-            '兰州':[103.840521,36.067235],
-            '贵阳':[106.636577,26.653325],
-            '成都':[104.081534,30.655822],
-            '西安':[108.946466,34.347269],
-            '长春':[125.3306020000,43.8219540000],
-            '台湾':[120.961454,23.80406],
-            '呼和浩特':[111.7555090000,40.8484230000],
-            '澳门':[113.5494640000,22.1929190000],
-            '武汉':[114.3115820000,30.5984670000],
-            '昆明':[102.71460113878045,25.049153100453159],
-            '乌鲁木齐':[87.56498774111579,43.84038034721766],
-            '益阳':[112.36654664522563,28.58808777988717],
-            '南京':[118.77807440802562,32.05723550180587],
-            '武昌':[114.35362228468498,30.56486029278519],
-        };
-
-        // 随机获得目标城市
-        var cityname = [], total = 0;
-        for (var key in cityordinate){
-            cityname[total++] = key;
-        };
-       
+        // 测试数据集
+        var cityordinate = [
+            {'state':'黑龙江', 'city':'哈尔滨', 'L':[126.5416150000,45.8088260000]},
+            {'state':'河北','city':'石家庄', 'L':[116.46,39.92]},
+            {'state':'北京', 'city':'北京', 'L':[116.39564503787867,39.92998577808024]},
+            {'state':'上海', 'city':'上海', 'L':[121.480539,31.235929]},
+            {'state':'广东', 'city':'广州', 'L':[113.271431,23.135336]},
+            {'state':'重庆', 'city':'重庆', 'L':[106.558434,29.568996]},
+            {'state':'山东', 'city':'青岛', 'L':[120.38442818368189,36.10521490127382]},
+            {'state':'福建', 'city':'福州', 'L':[119.30347,26.080429]},
+            {'state':'甘肃', 'city':'兰州', 'L':[103.840521,36.067235]},
+            {'state':'贵州', 'city':'贵阳', 'L':[106.636577,26.653325]},
+            {'state':'四川', 'city':'成都', 'L':[104.081534,30.655822]},
+            {'state':'陕西', 'city':'西安', 'L':[108.946466,34.347269]},
+            {'state':'吉林', 'city':'长春', 'L':[125.3306020000,43.8219540000]},
+            {'state':'台湾', 'city':'台湾', 'L':[120.961454,23.80406]},
+            {'state':'内蒙古', 'city':'呼和浩特', 'L':[111.7555090000,40.8484230000]},
+            {'state':'澳门', 'city':'澳门', 'L':[113.5494640000,22.1929190000]},
+            {'state':'湖北', 'city':'武汉', 'L':[114.3115820000,30.5984670000]},
+            {'state':'云南', 'city':'昆明', 'L':[102.71460113878045,25.049153100453159]},
+            {'state':'新疆', 'city':'乌鲁木齐', 'L':[87.56498774111579,43.84038034721766]},
+            {'state':'湖南', 'city':'益阳', 'L':[112.36654664522563,28.58808777988717]},
+            {'state':'江苏', 'city':'南京', 'L':[118.77807440802562,32.05723550180587]},
+            {'state':'江西', 'city':'武昌', 'L':[114.35362228468498,30.56486029278519]},
+        ];
         // 创建操作按钮，每次点击发射一条物流线
         button.append("circle")
                 .attr("cx", width*0.9)
@@ -161,8 +169,8 @@
                 .style("font-size", "30px")
                 .text("click");
         button.on("click", function(){
-            var _index = ~~(Math.random() * total);
-            moveto(cityname[_index], cityordinate[cityname[_index]]);
+            var _index = ~~(Math.random() * cityordinate.length);
+            moveto(cityordinate[_index]);
         });
 
         var scale = d3.scaleLinear();
