@@ -192,14 +192,15 @@ def mycase(request, casename):
     import os
     from time import localtime, strftime
     from mywebsite.models import my_case
-    casepath = 'templates/mycase/'
-    caselist = [i.lower() for i in os.listdir(casepath)]
-    print(casename, caselist)
+    casename = casename.lower()
+    clist = list(my_case.objects())
+    print(clist)
+    urllist = [i.urllink for i in clist]
     # 如果实例文件存在，则返回实例文件
-    if casename in caselist:
-        return render(request, casename.lower())
+    if casename in urllist:
+        return render(request, 'mycase/%s' % casename)
     else:
-        return HttpResponse(caselist)
+        return render(request, 'tablelist.html', {'clist':clist})
     # # 获得实例文件名
     # caselist = [i.lower() for i in os.listdir(casepath)]
     # ·print(caselist)

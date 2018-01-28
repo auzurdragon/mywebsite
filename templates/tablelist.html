@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row col-md-12">
+            <div class="list-group">
+                {% for item in clist %}
+                <a class="list-group-item" href="{{ item.urllink }}" target="_blank">{{ item.updated }}&nbsp;&nbsp;&nbsp;&nbsp;{{ item.title }}
+                    <span class="badge">{{ item.tags }}</span>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

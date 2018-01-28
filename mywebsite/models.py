@@ -51,11 +51,9 @@ class web_user(Document):
         return self.tname
 
 class my_case(Document):
-    tid = IntField()
     title = StringField(required=True)
-    filetype = StringField(required=True)
-    datestr = StringField()
     urllink = URLField()
-
+    tags = StringField()
+    updated = StringField()
     def __str__(self):
         return self.title
