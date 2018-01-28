@@ -192,14 +192,20 @@ def mycase(request, casename):
     import os
     from time import localtime, strftime
     from mywebsite.models import my_case
-    print(casename)
-    # casename = casename.lower()
+    casepath = 'templates/mycase/'
+    caselist = [i.lower() for i in os.listdir(casepath)]
+    print(casename, caselist)
+    # 如果实例文件存在，则返回实例文件
+    if casename in caselist:
+        return render(request, casename.lower())
+    else:
+        return HttpResponse(caselist)
     # # 获得实例文件名
     # caselist = [i.lower() for i in os.listdir(casepath)]
     # ·print(caselist)
     # 如eid文件名存在则加载实例文件，否则加载实例列表。
     # if casename in caselist:
-    return render(request, casename)
+    #   return render(request, casename.lower())
     # else:
     #     caselist = [{'casename':i} for i in caselist]
     #     for item in caselist:
