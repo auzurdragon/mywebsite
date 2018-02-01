@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf8">
+    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+    <title>数据可视化：使用D3JS绘制太阳系运行图</title>
+</head>
+<body>
+    <div class="solar"></div>
+    <defs>
+        <marke id="pmarker" viewbox="0 0 12 12" markerWidth="12" markerHeight="12" orient="auto" markerUnits="strokeWidth" refX="6" refY="6">
+            <circle cx="6" cy="6" r="4" fill="white"></circle>
+        </marke>
+    </defs>
+</body>
+<script type="text/javascript">
+    // 设置SVG
+    var width=800, height=800;
+    svg = d3.select("body div.solar")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .style("background", "#000");
+    // 行星图分组
+    orbit = svg.append("g").attr("class", "orbit").attr("fill-opacity",0).attr("stroke", "grey").attr("stroke-opacity", "0.5").attr("stroke-width", 1).attr("stroke-dasharray","3 3");
+    star = svg.append("g").attr("class", "planet").attr("fill", "white").attr("fill-opacity",1);    
+    // 太阳系中心
+    var sx = width/2, sy = height/2;    
+    // 太阳数据
+    var sun = {"radius":695500, "color":d3.rgb(248,107,35)};
+    // 星球数据
+    var data = [
+        {"name":"mercury","radius":4878/2, "rotation":58.65, "revolution":87.97, "speed":47.89, "distance":57.91, "rmax":69.7, "rmin":45.9, "color":d3.rgb(166,138,56), "moon":0},
+        {"name":"venus","radius":12103/2, "rotation":-243, "revolution":224.70, "speed":35.03, "distance":108.20, "rmax":109, "rmin":107.4, "color":d3.rgb(246,157,97), "moon":0},
+        {"name":"earth","radius":12756/2, "rotation":1, "revolution":365.26, "speed":29.79, "distance":149.60, "rmax":152.1, "rmin":147.1, "color":d3.rgb(115,114,174), "moon":1},
+        {"name":"mars","radius":6786/2, "rotation":1.03, "revolution":686.98, "speed":24.13, "distance":227.94, "rmax":249.1, "rmin":206.7, "color":d3.rgb(140,119,63), "moon":2},
+        {"name":"jupiter","radius":142984/2, "rotation":0.41, "revolution":11.86*365, "speed":13.06, "distance":778.33, "rmax":815.7, "rmin":740.9, "color":d3.rgb(156,164,143), "moon":16},
+        {"name":"saturn","radius":120536/2, "rotation":0.44, "revolution":29.46*365, "speed":9.64, "distance":1426.98, "rmax":1507, "rmin":1347, "color":d3.rgb(215,171,68), "moon":23},
+        {"name":"uranus","radius":51118/2, "rotation":-0.72, "revolution":84.01*365, "speed":6.81, "distance":2870.99, "rmax":3004, "rmin":2735, "color":d3.rgb(164,192,206), "moon":21},
+        {"name":"neptune","radius":49528/2, "rotation":0.67, "revolution":164.79*365, "speed":5.43, "distance":4504.30, "rmax":4537, "rmin":4456, "color":d3.rgb(133,136,180), "moon":14},
+    ];
+    // 星球大小转换
+    var t = [sun.radius,];
+    for (var i = 0; i < data.length; i++){
+        t[t.length] = data[i].radius;
+    };
+    console.log(t);
+    var scale_radius = d3.scaleLinear()
+        .domain([d3.min(t), sun.radius])
+        .range([4, 20]);
+    // 日距转换
+    var t = [];
+    for (var i = 0; i < data.length; i++){
+        t[t.length] = data[i].distance;
+    };
+    console.log(t);
+    var scale_distance = d3.scaleLinear()
+        .domain([d3.min(t), d3.max(t)])
+        .range([scale_radius(sun.radius)+20, 350]);
+    // 公转周期转换
+    var t = [];
+    for (var i = 0; i < data.length; i++){
+        t[t.length] = data[i].revolution;
+    };
+    console.log(t);
+    var scale_revolution = d3.scaleLinear()
+            .domain([d3.min(t), d3.max(t)])
+            .range([1,684])
+    // 绘制太阳
+    star.append("circle")
+        .attr("id", "sun")
+        .attr("cx", sx)
+        .attr("cy", sy)
+        .attr("fill", sun.color)
+        .attr("r", scale_radius(sun.radius));
+    // 创建星球方法
+    var planet = function(pdata){
+        // 绘制星球
+        star.append("circle")
+            .attr("class", "planet")
+            .attr("id", pdata.name)
+            .attr("cx", function(){return sx - scale_distance(pdata.distance);})
+            .attr("cy", sy)
+            .attr("r", function(){return scale_radius(pdata.radius);})
+            .attr("fill", pdata.color)
+            .append("animateTransform") // 添加旋转动画，使用svg的animate标签
+            .attr("attributeName", "transform") // 指定动画的属性名称，使用rotate时必须指定为transform，否则需要指定比如cx属性名
+            .attr("begin", "0s")    // 开始时间
+            .attr("dur", scale_revolution(pdata.revolution)+"s")    // 结束时间
+            .attr("type", "rotate") // 动画类型，旋转
+            .attr("from", "0 400 400")  // 指定旋转的<起始角度>,<中心点横坐标>,<中心点纵坐标>
+            .attr("to", "360 400 400")  // 指定旋转的<终止角度>...
+            .attr("repeatCount", "indefinite"); // 无限循环
+        // 绘制星球轨道
+        orbit.append("circle")
+            .attr("class", "orbit")
+            .attr("id", pdata.name)
+            .attr("cx", sx)
+            .attr("cy", sy)
+            .attr("r", function(){return scale_distance(pdata.distance);});
+    };
+    // 绘制星球
+    for (var i = 0; i < data.length; i++){
+        planet(data[i]);
+    };
+    
+    // // 绘制星球轨道
+    // orbit.selectAll("circle")
+    //     .data(data)
+    //     .enter()
+    //     .append("circle")
+    //     .attr("id", function(d){return d.planet;})
+    //     .attr("cx", sx)
+    //     .attr("cy", sy)
+    //     .attr("r", function(d){return scale_distance(d.distance);});
+    // // 绘制星球
+    // star.selectAll("circle.star")
+    //     .data(data)
+    //     .enter()
+    //     .append("circle")
+    //     .attr("class", "star")
+    //     .attr("id", function(d){return d.planet;})
+    //     .attr("cx", function(d){return sx-scale_distance(d.distance);})
+    //     .attr("cy", sy)
+    //     .attr("r", function(d){return scale_radius(d.radius);})
+    //     .attr("fill", function(d){return d.color;});
+
+</script>
+</html>

@@ -1,11 +1,12 @@
 <!-- 使用D3JS绘制物流图 -->
+{% load static %}
 
-{% load static from staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf8">
-        <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+        <!-- <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script> -->
+        <script type="text/javascript" src="{% static 'd3/d3.js' %}"></script>
         <title>使用D3JS绘制动态地图</title>
     </head>
     <body>
@@ -24,14 +25,13 @@
                         .append("svg")
                         .attr("width", "100%" )
                         .attr("height", height)
-                        .style("background","#000");
+                        .style("background","Maroon");
         // 创建图层
-        gmap = svg.append("g").attr("id", "map").attr("stroke", "white").attr("stroke-width",1);
-        mline = svg.append("g").attr("id", "moveto").attr("stroke", "#FFF").attr("stroke-width", 1.5).attr("fill","#FFF");
-        button = svg.append("g").attr("id", "button").attr("stroke", "white").attr("stroke-width", 1).attr("fill", "white");
+        gmap = svg.append("g").attr("id", "map").attr("stroke", "white").attr("stroke-width",1).attr("fill","grey");
+        mline = svg.append("g").attr("id", "moveto").attr("stroke", "red").attr("stroke-width", 1.5).attr("fill","#FFF");
+        button = svg.append("g").attr("id", "button").attr("stroke", "white").attr("stroke-width", 1);
         // 创建发射线顶端标记
         marker = svg.append("defs")
-                    .append("marker")
                     .append("marker")
                     .attr("id", "pointer")
                     .attr("viewBox","0 0 12 12")    // 可见范围
@@ -41,12 +41,12 @@
                     .attr("markerUnits", "strokeWidth") // 随连接线宽度进行缩放
                     .attr("refX", "6")              // 连接点坐标
                     .attr("refY", "6")
-        // 绘制标记中心圆
+        // 绘制标记中心飞机
         marker.append("circle")
                 .attr("cx", "6")
                 .attr("cy", "6")
                 .attr("r", "3")
-                .attr("fill", "white");
+                .attr("fill", "maroon");
         // 绘制标记外圆，之后在timer()中添加闪烁效果
         marker.append("circle")
                 .attr("id", "markerC")
@@ -55,7 +55,48 @@
                 .attr("r", "5")
                 .attr("fill-opacity", "0")
                 .attr("stroke-width", "1")
-                .attr("stroke", "white");
+                .attr("stroke", "silver");
+        var d=0.6;
+        marker_plane = svg.select("defs")
+                .append("marker")
+                .attr("id", "plane")
+                .attr("viewBox", "0 0 " + d*20 + " " + d*20 +" ")
+                .attr("markerWidth", d*20)
+                .attr("markerHeight", d*20)
+                .attr("orient", "auto")
+                .attr("markerUnits", "strokeWidth")
+                .attr("refX", d*10)
+                .attr("refY", d*10);
+        marker_plane.append("path")
+                .attr("fill", "maroon")
+                .attr("d", "M " + d*1 + " " + d*10  + " "+
+                            "l " + -d + " " + -d*4 + " "+
+                            "l " + d*2 + " " + 0 + " "+
+                            "l " + d*2 + " " + d*2 + " "+
+                            "l " + d*4 + " " + 0 + " "+
+                            "l " + -d*2 + " " + -d*8 + " "+
+                            "l " + d*2 + " " + 0 + " "+
+                            "l " + d*6 + " " + d*8 + " "+
+                            "l " + d*4 + " " + 0 + " "+
+                            "c " + "0 0 "+ d*4 + " " + d*2 + " " + " 0 " +d*4 +
+                            "l " + -d*4 + " " + 0 + " "+
+                            "l " + -d*6 + " " + d*8 + " "+
+                            "l " + -d*2 + " " + 0 + " "+
+                            "l " + d*2 + " " + -d*8 + " "+
+                            "l " + -d*4 + " " + 0 + " "+
+                            "l " + -d*2 + " " + d*2 + " "+
+                            "l " + -d*2 + " " + 0 + " "+
+                            "Z " 
+                            );
+        // marker_plane.append("circle")
+        //         .attr("cy", d*10)
+        //         .attr("cy", d*10)
+        //         .attr("r", d*10)
+        //         .attr("fill-opacity", 0)
+        //         .attr("stroke-opacity", 1)
+        //         .attr("stroke", "yellow")
+        //         .attr("stroke-width", 1)
+        //         .attr("stroke-dasharray", "2 2");
         // 记录长沙坐标
         var changsha = projection([112.59,28.12]);
         // 读取地图数据，并绘制中国地图
@@ -91,7 +132,7 @@
         // 创建方法，输入data坐标，绘制发射线
         var moveto = function(data){
             // 创建颜色方法，修改省份地图的颜色
-            var colorinter = d3.interpolate(d3.rgb(0,0,0), d3.rgb(255,255,255));
+            var colorinter = d3.interpolate(d3.rgb("grey"), d3.rgb("maroon"));
             var colorlinear = d3.scaleLinear().domain([0, 20]).range([0,1]);
             // 转换起点（长沙）的经纬度到坐标
             var pf = {x:projection([112.59,28.12])[0], y:projection([112.59,28.12])[1]};
@@ -118,14 +159,17 @@
                         });
                 statelist[data.state] = 1;
             };
-            // 绘制一个圆形，从起点移向目标点
-            mline.append("circle")
-                .attr("cx", pf.x)
-                .attr("cy", pf.y)
-                .attr("r", 3)
+            // 调用marker中的飞机标记，从起点移向目标点
+            mline.append("line")
+                .attr("x1", pf.x)
+                .attr("y1", pf.y)
+                .attr("x2", pt.x)
+                .attr("y2", pt.y)
+                .attr("stroke-opacity", 0)
+                .attr("marker-start", "url(#plane)")
                 .transition()
                 .duration(distance*30)
-                .attr("transform", "translate("+(pt.x-pf.x)+","+(pt.y-pf.y)+")")
+                .attr("transform", "translate(" + (pt.x-pf.x)+ "," + (pt.y-pf.y)+ ")")
                 .remove();
             // 修改目标所在省份的填充颜色
             gmap.select('path#'+data.state)
@@ -157,33 +201,46 @@
             {'state':'江西', 'city':'武昌', 'L':[114.35362228468498,30.56486029278519]},
         ];
         // 创建操作按钮，每次点击发射一条物流线
-        button.append("circle")
-                .attr("cx", width*0.9)
-                .attr("cy", height*0.8)
-                .attr("r", width/20)
-                .attr("text","click")
+        button.append("rect")
+                .attr("x", width*0.45)
+                .attr("y", height*0.2)
+                .attr("width", width*0.1)
+                .attr("height", height*0.1)
                 .attr("fill", "grey");
         button.append("text")
-                .attr("x", width*0.87)
-                .attr("y", height*0.81)
+                .attr("x", width*0.45+width*0.05)
+                .attr("y", height*0.2+height*0.05)
+                .attr("fill", "white")
                 .style("font-size", "30px")
-                .text("click");
-        button.on("click", function(){
-            var _index = ~~(Math.random() * cityordinate.length);
-            moveto(cityordinate[_index]);
-        });
-
+                .style("text-anchor", "middle")
+                .style("dominant-baseline", "middle")
+                .text("Start");
+        // 创建时间序列，进行动画
+        // 
         var scale = d3.scaleLinear();
         scale.domain([0, 1000, 2000])
             .range([0, 1, 0]);
+        var _switch = 0;
+        button.on("click",function(){
+            if (button.select("text").text() == "Start"){
+                button.select("text").text("Stop");
+                _switch = 1;
+            }else{
+                button.select("text").text("Start");
+                _switch = 0;
+            };
+        });
         var start = Date.now();
         d3.timer(function(){
             var s1 = scale((Date.now() - start)%2000);
-            // console.log(s1);
             gmap.select("circle#changshaC")
                 .attr("stroke-opacity", s1);
             marker.select("circle#markerC")
                 .attr("stroke-opacity", s1);
-        });
+            if (_switch*s1 > 0.95){
+                _index = ~~(Math.random() * cityordinate.length);
+                moveto(cityordinate[_index]);
+            };
+            });
     </script>
 </html>
