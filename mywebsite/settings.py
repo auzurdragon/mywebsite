@@ -64,6 +64,7 @@ TEMPLATES = [
         'DIRS': [   # 指定模板加载路径
             'templates/',             # 绝对路径, <webroot>/templates
             'templates/mycase/',
+            'mycoupon/templates/',
             '/var/www/mywebsite/templates/',    # 服务器端的模板目录路径
 	        '/var/www/mywebsite/templates/mycase/',
             os.path.join(os.path.dirname(__file__), 'templates').replace('\\', '/') # 相对路径,各应用模板路径的关键

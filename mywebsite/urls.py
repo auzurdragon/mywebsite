@@ -22,10 +22,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 # 加载mywebsite下的views视图文件
 from mywebsite import views
+from mycoupon import views as mycoupon
 from mycms import views as cmsviews
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.index),                # 指定首页为index
+    # url(r'^$', views.index),                # 指定首页为index
+    url(r'^$', mycoupon.tb_coupon),
     url(r'^python/$', views.python),
     url(r'^examples/$', views.examples),
     url(r'^children/$', views.children),

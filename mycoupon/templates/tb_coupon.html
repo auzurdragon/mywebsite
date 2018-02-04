@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row" style="padding:0px 7px 0 7px;">
+    {% for item in clist %}
+    {% if item.coupon_remain_count > 0 %}
+        <a href="{{ item.url_coupon }}" target="_blank">
+    {% else %}
+        <a href="{{ item.url_tk }}" target="_blank">
+    {% endif %}
+        <div class="col-md-2 col-sm-4 col-xs-6" id="item" style="padding:7px;margin:15px 0px 15px 0px;">
+            <div class="item-pic">
+                <img class="img-responsive img-rounded center-block" src="{{ item.url_pic }}" style="max-height:170px;">
+            </div>
+            <div class="item-meta">
+                <em>{{ item.title }}</em>
+            </div>
+            <div class="item-coupon">
+                <em>￥:{{ item.price }}</em>
+                {% if item.coupon_remain_count > 0 %}
+                    <span class="badge" style="float:right;">{{ item.coupon_info }}</span>
+                {% endif %}
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
+
