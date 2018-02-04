@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'mywebsite',
     'examples',
     'mycms',                        # 管理后台
+    'mycoupon',
 ]
 
 MIDDLEWARE = [
@@ -64,10 +65,10 @@ TEMPLATES = [
         'DIRS': [   # 指定模板加载路径
             'templates/',             # 绝对路径, <webroot>/templates
             'templates/mycase/',
-            'mycoupon/templates/',
+            # 'mycoupon/templates/',
             '/var/www/mywebsite/templates/',    # 服务器端的模板目录路径
 	        '/var/www/mywebsite/templates/mycase/',
-            '/var/www/mywebisite/mycoupon/templates/',
+            # '/var/www/mywebisite/mycoupon/templates/',
             os.path.join(os.path.dirname('__file__'), 'templates').replace('\\', '/') # 相对路径,各应用模板路径的关键
         ],
         'APP_DIRS': True,
