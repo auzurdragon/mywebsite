@@ -14,7 +14,7 @@ import os
 from mongoengine import connect
 
 # 建立对数据库的连接
-connect("web_db", host="localhost", port=28010)
+connect("web_db", host="112.74.161.9", port=28010)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'examples',
     'mycms',                        # 管理后台
     'mycoupon',
+    'mychild',
 ]
 
 MIDDLEWARE = [

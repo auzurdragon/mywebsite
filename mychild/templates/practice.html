@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid" style="width:80%">
+    <div class="row" style="margin-bottom: 10px">
+        <button id="btn" type="button" class="button btn-default" style="width:100%" >Start <span> 00:00 </span></button>
+    </div>
+    <div class="row">
+    <div class="progress">
+        <div id="counter" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:0%">10/100
+            <span class="sr-only"></span>
+        </div>
+    </div>
+</div>
+    <div class="row form-inline" id="practice">
+        <!-- <div class="col-lg-3 col-md-4">
+        </div> -->
+    </div>
+</div>
+<script type="text/javascript">
+    var formulalist = [], zlist=[];
+    for (var i=0; i<100; i++){
+        var x = Math.round(Math.random()*99);
+        if (i%2==0 & x > 10){
+            var y = Math.round(Math.random()*(x));
+            var z = x - y;
+            console.log(i, x, " - ", y, " = ", z );
+            formulalist.push(x + " - " + y + " = ");
+            zlist.push(z);
+        }
+        else {
+            var y = Math.round(Math.random()*(100 - x));
+            var z = x + y;
+            console.log(i, x, " + ", y, " = ", z);
+            formulalist.push(x + " + " + y + " = ");
+            zlist.push(z);
+        };
+    };
+    var practice = d3.select("div#practice")
+                .selectAll("div.input-group")
+                .data(formulalist)
+                .enter()
+                .append("div")
+                .attr("class", "input-group col-md-4 col-lg-3");
+    practice.append("span")
+        .attr("class", "input-group-addon")
+        .style("width", "120px")
+        .text(function(d){return d;});
+    var snum = 0;
+    var bt = d3.select("button#btn");
+    var counter = d3.select("div#counter");
+    practice.append("input")
+        .attr("class", "form-control")
+        .attr("id", function(d,i){return i;})
+        .attr("width", "auto")
+        .attr("type", "text")
+        .on("blur", function(d,i){
+            if (zlist[i] != $(this).val()){
+                console.log(zlist[i], $(this).val());
+                d3.select(this).style("background", "red");
+            }
+            else{
+                d3.select(this).style("background", "white");
+                snum += 1;
+                counter.style("width", snum+"%").text(snum + " / 100");
+                $(this).attr("disabled",true);
+            };
+        });
+    var sbtn = 0, stime = 0, csecond = 0, cminute = 0;
+    practice.on("keydown", function(){
+        sbtn = 1;
+        stime = Date.now();
+        bt.attr("class", "button btn-failed");
+    });
+    bt.on("click", function(){
+        sbtn = 0;
+        bt.attr("class", "button btn-primary")
+
+        // bt.text('End ')
+        //     .append("span")
+        //     .text(Date.now() - stime);
+    });
+    d3.timer(function(){   
+            var ctime = Math.floor((Date.now() - stime)/1000);
+            csecond = ctime % 60;
+            cminute = Math.floor(ctime /60);
+            if (csecond < 10){
+                csecond = '0'+csecond;
+            };
+            if (cminute <10){
+                cminute = '0'+cminute;
+            };
+            if (sbtn==1){
+                bt.text("Stop ")
+                    .append("span")
+                    .text(cminute + ":" + csecond);
+            }
+        });
+</script>
+{% endblock %}

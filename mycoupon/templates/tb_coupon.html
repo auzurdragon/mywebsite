@@ -2,24 +2,50 @@
 
 {% block content %}
 <div class="container">
+    <div class="row">
+        <form class="input-group" action"/coupon" method="get">
+            <input name="q" type="text" class="form-control" placeholder="请输入入关键词" id="searchtext">
+            <input name="page" type="hidden" value=1>
+            <span class="input-group-btn">
+                <input type="submit" class="btn btn-default" type="button" id="searchbtn">搜索</button>
+            </span>
+        </form>
+    </div>
+    <div class="row">
+        <ul class="pagination">
+            {% if page_no != 1 %}
+            <li><a href="#" id="previous">&laquo;</a></li>
+            {% endif %}
+            {% for p in plist %}
+                {% if p == page_no %}
+                    <li><a href="#"><strong>{{ p }}</strong></a></li>
+                {% else %}
+                    <li><a href="/coupon?q={{ q }}&page={{ p }}">{{ p }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if page_no < page_max %}
+            <li><a href="#" id="next">&raquo;</a></li>
+            {% endif %}
+        </ul>
+    </div>
     <div class="row" style="padding:0px 7px 0 7px;">
     {% for item in clist %}
     {% if item.coupon_remain_count > 0 %}
-        <a href="{{ item.url_coupon }}" target="_blank">
+        <a href="{{ item.coupon_click_url }}" target="_blank">
     {% else %}
-        <a href="{{ item.url_tk }}" target="_blank">
+        <a href="{{ item.item_url }}" target="_blank">
     {% endif %}
-        <div class="col-md-2 col-sm-4 col-xs-6" id="item" style="padding:7px;margin:15px 0px 15px 0px;">
+        <div class="col-md-3 col-sm-4 col-xs-6" id="item" >
             <div class="item-pic">
-                <img class="img-responsive img-rounded center-block" src="{{ item.url_pic }}" style="max-height:170px;">
+                <img class="img-responsive img-rounded center-block" src="{{ item.pict_url }}" style="max-height:220px;">
             </div>
-            <div class="item-meta">
+            <div class="item-meta style="padding:0% 1% 0% 1%;margin:5% 0% 5% 0%;">
                 <em>{{ item.title }}</em>
             </div>
             <div class="item-coupon">
-                <em>￥:{{ item.price }}</em>
+                <em>￥:{{ item.zk_final_price }}</em>
                 {% if item.coupon_remain_count > 0 %}
-                    <span class="badge" style="float:right;">{{ item.coupon_info }}</span>
+                    <span class="badge" style="float:right;background:red;color:white;">{{ item.coupon_info }}</span>
                 {% endif %}
             </div>
         </div>
@@ -27,6 +53,9 @@
     {% endfor %}
     </div>
 </div>
-
+<script type="text/javascript">
+    d3.select("a#previous").attr("href","/coupon?q={{ q }}&page=" + ({{ page_no }}-1))
+    d3.select("a#next").attr("href", "/coupon?q={{ q }}&page=" + ({{ page_no }}+1))
+</script>
 {% endblock %}
 
