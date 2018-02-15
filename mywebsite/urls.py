@@ -49,5 +49,5 @@ urlpatterns = [
     # 管理后台
     url(r'cms/$', cmsviews.index),
     # root.txt文件验证，阿里
-    url(r'root.txt', views.rootauth),
+    url(r'root.txt', views.rootauth), 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

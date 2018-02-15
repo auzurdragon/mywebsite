@@ -221,6 +221,6 @@ def mycase(request, casename):
 
 def rootauth(request):
     """ 阿里验证 """
-    with open('root.txt', 'rb') as reader:
-        root = reader.read()
-    return HttpResponse(root)
+    # with open('root.txt', 'rb') as reader:
+    #     root = reader.read()
+    return HttpResponse('e95d2f4a675fe6f2d353bf7bcc062c7006aee9c9eaaa7463')
