@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'mycms',                        # 管理后台
     'mycoupon',
     'mychild',
+    'mynote',
 ]
 
 MIDDLEWARE = [
@@ -142,10 +143,15 @@ STATIC_URL = '/static/'
 
 # 存放各个app的static和公共static目录
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static').replace('\\', '/'),
     'static/',
     'mycms/static/',
 ]
 
 # 设置生产环境的静态文件目录，使用python manage.py collectstatic可以把开发环境各个静态文件收集到该目录，交由http服务统一管理
 STATIC_ROOT = "/var/www/mywebsite/collectstatic/"
+
+# 设置动态文件存储路径
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media').replace('\\', '/')
+
+# 

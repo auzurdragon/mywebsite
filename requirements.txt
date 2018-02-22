@@ -1,0 +1,12 @@
+
+
+pandas
+numpy
+requests
+bs4
+matplotlib
+selenium
+pymongo
+mongoengine
+itchat
+Django == 1.11
