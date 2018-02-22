@@ -220,7 +220,11 @@ def mycase(request, casename):
     #     return render(request, 'caselist.html', {'caselist':caselist})
 
 def rootauth(request):
-    """ 阿里验证 """
+    """ root.txt验证 """
     # with open('root.txt', 'rb') as reader:
     #     root = reader.read()
     return HttpResponse('e95d2f4a675fe6f2d353bf7bcc062c7006aee9c9eaaa7463')
+
+def jdrootcheck(request):
+    return HttpResponse('9681D8593110F2604E16AA638083EE38')
+    

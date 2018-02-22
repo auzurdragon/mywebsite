@@ -25,6 +25,7 @@ from mywebsite import views
 from mycoupon import views as mycoupon
 from mychild import views as mychild
 from mycms import views as cmsviews
+from mynote import views as mynote
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # url(r'^$', views.index),                # 指定首页为index
@@ -46,8 +47,12 @@ urlpatterns = [
     url(r'wxopen$', views.wxopen),         # 微信接口验证，注意不能使用wxopen/$
     url(r'mycase/([\w.]{0,20})$', views.mycase),   # 传递()中的数字、字母和下划线字符给mycase()
     url(r'^applications/$', views.applications),  # 我的应用
+    url(r'^mynote/weixin/$', mynote.weixin),        # 微信接口调用
+    url(r'^mynote/weixin/login/$', mynote.weixin_login),    # 微信网页登录
+    url(r'^mynote/weixin/check/$', mynote.weixin_check),
     # 管理后台
     url(r'cms/$', cmsviews.index),
     # root.txt文件验证，阿里
     url(r'root.txt', views.rootauth), 
+    url(r'jos_guid.txt', views.jdrootcheck),    # 京东开发者网站验证
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
