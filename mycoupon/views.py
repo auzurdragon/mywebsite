@@ -1,25 +1,36 @@
+
 from django.shortcuts import render
+from django.http import HttpResponse
+from mycoupon import taobao_api
 
 # Create your views here.
 
 def tb_coupon(request):
-    """优惠券搜索"""
-    # from mycoupon.models import tb_coupon
-    # from json import loads
-    import re
-    from math import ceil
-    from mycoupon.coupon import coupon
-    from django.core.paginator import Paginator
-    q = request.GET.get('q') if request.GET.get('q') else '吉他'
-    page_no = int(request.GET.get('page')) if request.GET.get('page') else 1
-    s = coupon()
-    cnum, clist = s.tb_getcoupon(q=q, page_no=page_no)    
-    # 提取折扣价和优惠券信息，计算券后价格
-    for i in clist:
-        i['zk_final_price'] = round(float(i['zk_final_price']) - float(re.findall('\d{1,3}', i['coupon_info'])[1]), 2)
-    page_max = ceil(cnum/20)
-    plist = list(range(1, ceil(cnum/20)+1)) # 每页20个，转换查询结果数量为页数
-    print(page_no)
-    page_no = page_no if page_no in plist else 1 # 检查页码是否在总页数范围内
-    print(cnum, q, page_no, plist,  sep="\n")
-    return render(request,'tb_coupon.html', {'clist':clist, 'q':q, 'page_no':page_no, 'plist':plist, 'page_max':page_max})
+    """
+    优惠券搜索
+    """
+    # 初始化参数
+    content = []
+    page_size = 30
+    key = request.GET.get('key') if request.GET.get('key') else '吉它'
+    page_no = int(request.GET.get('page')) if request.GET.get('page') else int(1)
+    page_list = []
+    page_num = 0
+    # 查找优惠券
+    result = taobao_api.get_coupon(key=key, page_size=page_size, page_no=page_no)
+    if result[0] == True:
+        content = result[2]
+        # 计算页数
+        page_num = int(result[1]/page_size) + 1
+        # 计算页码序列
+        if page_no < 7:
+            A = 1
+            B = 11 if page_num > 11 else page_num
+        elif page_no > page_num -6:
+            A = page_num - 10
+            B = page_num
+        else:
+            A = page_no - 5
+            B = page_no + 5
+        page_list = list(range(A, B+1))
+    return render(request,'coupon.html', {'content':content, 'key':key, 'page_no':page_no, 'page_list':page_list, 'page_num':page_num})

@@ -49,10 +49,9 @@ urlpatterns = [
     url(r'^applications/$', views.applications),  # 我的应用
     url(r'^mynote/weixin/$', mynote.weixin),        # 微信接口调用
     url(r'^mynote/weixin/login/$', mynote.weixin_login),    # 微信网页登录
-    url(r'^mynote/weixin/check/$', mynote.weixin_check),
+    url(r'^mynote/weixin/check/$', mynote.weixin_check),    # 微信号被封了
     # 管理后台
     url(r'cms/$', cmsviews.index),
-    # root.txt文件验证，阿里
-    url(r'root.txt', views.rootauth), 
-    url(r'jos_guid.txt', views.jdrootcheck),    # 京东开发者网站验证
+    # url(r'root.txt', views.rootauth),             # root.txt文件验证，阿里
+    # url(r'jos_guid.txt', views.jdrootcheck),      # 京东开发者网站验证
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

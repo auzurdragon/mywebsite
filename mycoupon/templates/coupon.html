@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" id="searchBar">
+    <!-- 搜索输入框，使用 bootstrap 表单样式 -->
+    <div class="row" style="margin:0px 0px 20px 0px;">
+        <form class="form-group" method="GET">
+            <div class="form-group">
+                <div class="input-group">
+                    <!-- <label class="sr-only" for="keywords">keywords</label> -->
+                    <!-- <div class="input-group-addon">优惠券</div> -->
+                    <input name="key" type="text" class="form-control" id="keywords" placeholder="请输入关键字" value="{{ key }}">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-default">搜索</button>
+                    </span>
+                </div>
+            </div>
+        </form>
+    </div>
+<!-- 筛选框  -->
+<!-- <div class="container-fluid thumbnail" id="selectBar" style="margin:0px 0px 0px 0px;">
+        <button type="button" class="btn btn-default">价格</button>
+            <input name="priceDown" type="number" placeholder="0.00">
+            -
+            <input name="priceUp" type="number" placeholder="0.00">
+        <button type="button" class="btn btn-default">天猫</button>
+</div> -->
+
+<div class="container" id="couponList">
+    <div class="row">
+    {% if content %}
+        {% for item in content %}
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6"><!-- 大屏幕每格3宽，pc端放4张，平板和手机放6张 -->
+                <a href="{{ item.url }}" target="_blank">
+                    <div class="thumbnail"> <!--thumbnail  缩略图，给包含的元素加上一个圆角边框 -->
+                        <img src="{{ item.pict_url}}" class="img-responsive">
+                        <div class="caption">
+                            <h4>{{ item.title }}</h4>
+                            <div class="item-coupon">
+                                <span class="badge" style="float:right;background:red;color:white;">{{ item.coupon_info }}</span>
+                                <p>￥{{ item.coupon_price }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h4>没有搜索结果, 请输入其它关键词！</h4>
+    {% endif %}
+    </div>
+</div>
+<!-- 分页  -->
+<div class="container text-center">
+    <ul class="pagination">
+        <li><a class="btn btn-default" href="?key={{ key }}&page=1">首页</a></li>
+        {% ifequal page_no 1 %}
+        <li><a href="?key={{ key }}&page=1" class="btn disabled">&laquo;</a></li>
+        {% else %}
+        <li><a href="?key={{ key }}&page={{ page_no|add:-1 }}">&laquo;</a></li>
+        {% endifequal %}
+        {% for i in page_list %}
+        <li>
+            <a href="?key={{ key }}&page={{ i }}">
+            {% ifequal i page_no %}<strong>{{ i }}</strong>
+            {% else %}{{ i }}
+            {% endifequal %}
+            </a>
+        </li>
+        {% endfor %}
+        {% ifequal page_no page_num %}
+        <li><a href="?key={{ key }}&page={{ page_num }}" class="btn disabled">&raquo;</a></li>
+        {% else %}
+        <li><a href="?key={{ key }}&page={{ page_no|add:1 }}">&raquo;</a></li>
+        {% endifequal %}
+        <li><a href="?key={{ key }}&page={{ page_num }}">尾页</a></li>
+    </ul>
+</div>
+<script>
+
+</script>
+{% endblock %}

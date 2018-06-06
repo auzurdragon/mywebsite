@@ -30,7 +30,8 @@ def login(request):
 
 def index(request):
     """index 首页"""
-    return render(request, 'index.html')
+    # return render(request, 'index.html')
+    return HttpResponseRedirect("/coupon")
 
 def python(request):
     """python笔记"""
@@ -227,4 +228,3 @@ def rootauth(request):
 
 def jdrootcheck(request):
     return HttpResponse('9681D8593110F2604E16AA638083EE38')
-    
