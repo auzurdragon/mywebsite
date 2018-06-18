@@ -1,44 +1,64 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container" id="searchBar">
+<div class="container">
     <!-- 搜索输入框，使用 bootstrap 表单样式 -->
-    <div class="row" style="margin:0px 0px 20px 0px;">
-        <form class="form-group" method="GET">
-            <div class="form-group">
-                <div class="input-group">
-                    <!-- <label class="sr-only" for="keywords">keywords</label> -->
-                    <!-- <div class="input-group-addon">优惠券</div> -->
-                    <input name="key" type="text" class="form-control" id="keywords" placeholder="请输入关键字" value="{{ key }}">
-                    <span class="input-group-btn">
-                        <button type="submit" class="btn btn-default">搜索</button>
-                    </span>
-                </div>
+    <form class="form-group form-inline" id="searchBar">
+        {% csrf_token %}
+        <div class="row" style="margin:10px 0px 10px 0px;">
+            <div class="input-group col-lg-12" style="width:100%;">
+                <input name="q" type="text" class="form-control" id="keywords" placeholder="请输入关键字" value="{{ q }}">
+                <span class="input-group-btn">
+                    <div id="searchBtn" class="btn btn-default" style="width:100%;">搜索</div>
+                </span>
             </div>
-        </form>
-    </div>
-<!-- 筛选框  -->
-<!-- <div class="container-fluid thumbnail" id="selectBar" style="margin:0px 0px 0px 0px;">
-        <button type="button" class="btn btn-default">价格</button>
-            <input name="priceDown" type="number" placeholder="0.00">
-            -
-            <input name="priceUp" type="number" placeholder="0.00">
-        <button type="button" class="btn btn-default">天猫</button>
-</div> -->
+        </div>
+        <div class="row" style="margin:10px 0px 10px 0px;">
+            <div class="input-group" style="margin:10px 20px 10px 20px;">
+                <span>价格范围：</span>
+                <input name="start_price" type="text" onkeyup="this.value=this.value.replace(/[^\d]/g, '')" onafterpaste="this.value=this.value.replace(/[^\d]/g, '')">
+                -
+                <input name="end_price" type="text">
+            </div>
+            <div class="input-group" style="margin:10px 20px 10px 20px;">
+                <span>从低到高</span>
+                <input name="sort" type="checkbox" value="price_asc">
+            </div>
+        </div>
+        <div class="row" style="margin:10px 0px 10px 0px;">
+            <div class="input-group" style="margin:10px 20px 10px 20px;">
+                <span>天猫</span>
+                <input name="is_tmall" type="checkbox" value="true">
+            </div>
 
+            <div class="input-group" style="margin:10px 20px 10px 20px;">
+                <span>包邮</span>
+                <input name="need_free_shipment" type="checkbox" value="true">
+            </div>
+            <div class="input-group" style="margin:10px 20px 10px 20px;">
+                <span>消费者保障</span>
+                <input name="need_prepay" type="checkbox" value="true">
+            </div>
+        </div>
+        <div class="row" style="margin:10px 0px 10px 0px;" id="sortMethod">
+
+        </div>
+    </form>
+</div>
+<HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="90%" color=#987cb9 SIZE=3>
 <div class="container" id="couponList">
     <div class="row">
     {% if content %}
         {% for item in content %}
             <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6"><!-- 大屏幕每格3宽，pc端放4张，平板和手机放6张 -->
-                <a href="{{ item.url }}" target="_blank">
+                <a href="{{ item.my_url }}" target="_blank">
                     <div class="thumbnail"> <!--thumbnail  缩略图，给包含的元素加上一个圆角边框 -->
                         <img src="{{ item.pict_url}}" class="img-responsive">
                         <div class="caption">
                             <h4>{{ item.title }}</h4>
                             <div class="item-coupon">
                                 <span class="badge" style="float:right;background:red;color:white;">{{ item.coupon_info }}</span>
-                                <p>￥{{ item.coupon_price }}</p>
+                                <p>券后价:￥{{ item.my_price }}</p>
                             </div>
                         </div>
                     </div>
@@ -51,17 +71,18 @@
     </div>
 </div>
 <!-- 分页  -->
-<div class="container text-center">
+<HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="90%" color=#987cb9 SIZE=3>
+<!-- <div class="container text-center" id="paginator">
     <ul class="pagination">
-        <li><a class="btn btn-default" href="?key={{ key }}&page=1">首页</a></li>
+        <li class="page_first"><a class="btn btn-default">首页</a></li>
         {% ifequal page_no 1 %}
-        <li><a href="?key={{ key }}&page=1" class="btn disabled">&laquo;</a></li>
+        <li class="page_last"><a href="?q={{ q }}&page=1" class="btn disabled">&laquo;</a></li>
         {% else %}
-        <li><a href="?key={{ key }}&page={{ page_no|add:-1 }}">&laquo;</a></li>
+        <li class="page_last"><a href="?q={{ q }}&page={{ page_no|add:-1 }}">&laquo;</a></li>
         {% endifequal %}
         {% for i in page_list %}
-        <li>
-            <a href="?key={{ key }}&page={{ i }}">
+        <li class="page_no">
+            <a href="#" id="page_no">
             {% ifequal i page_no %}<strong>{{ i }}</strong>
             {% else %}{{ i }}
             {% endifequal %}
@@ -69,14 +90,86 @@
         </li>
         {% endfor %}
         {% ifequal page_no page_num %}
-        <li><a href="?key={{ key }}&page={{ page_num }}" class="btn disabled">&raquo;</a></li>
+        <li class="page_next"><a href="?q={{ q }}&page={{ page_num }}" class="btn disabled">&raquo;</a></li>
         {% else %}
-        <li><a href="?key={{ key }}&page={{ page_no|add:1 }}">&raquo;</a></li>
+        <li class="page_next"><a href="?q={{ q }}&page={{ page_no|add:1 }}">&raquo;</a></li>
         {% endifequal %}
-        <li><a href="?key={{ key }}&page={{ page_num }}">尾页</a></li>
+        <li class="page_end"><a href="#" class="btn btn-default">尾页</a></li>
     </ul>
-</div>
-<script>
-
+</div> -->
+<script type="text/javascript">
+    var searchBtn = $("#searchBtn");
+    var couponList = $("#couponList").children("div");
+    function search(page_no){
+        // 获得 form 中的参数
+        var searchBar = $("#searchBar").serializeArray();
+        var body = {'page_no': page_no};
+        searchBar.forEach(function(data){
+            if (data.value != ""){
+                body[data.name] = data.value;
+            };
+        });
+        $.post("/coupon/coupon_rest", body, function(data, status){
+            // 判断查询结果
+            var doc = $("#couponList").children("div");
+            if (data['coupon_num'] > 0){
+                // 绘制列表页面
+                doc.empty();
+                data['coupon_list'].forEach(function(i){
+                    var docstring = '<div class="col-lg-3 col-md-4 col-sm-6 col-xs-6"><a href="' + 
+                        i['my_url'] + 
+                    '" target="_blank"><div class="thumbnail"><img src="' + 
+                    i['pict_url'] + 
+                    '" class="img-responsive"><div class="caption"><h4>' + 
+                    i['title'] + 
+                    '</h4><div class="item-coupon"><span class="badge" style="float:right;background:red;color:white;">' + 
+                    i['coupon_info'] + 
+                    '</span><p>券后价:￥' + 
+                    i['my_price'] + 
+                    '</p></div></div></div></a></div';
+                    doc.append(docstring);
+                });
+                return data['coupon_num'];
+            }
+            else{
+                doc.empty();
+                doc.append("<h4>没有搜索结果, 请更换其它条件！</h4>")
+                return 0;
+            }
+    });};
+    // function paginator(page_num, page_cur){
+    //     // 绘制分页器
+    //     var page_start = 1;
+    //     var page_end = page_num;
+    //     $("li.page_no").remove();   // 清除原来的页码
+    //     // 计算页面起始点和终点
+    //     if (page_num > 12){
+    //         if (page_cur >=6 && page_cur <= (page_num-6)){
+    //             page_start = page_cur - 5;
+    //             page_end = page_cur + 5;
+    //         }else if (page_cur > (page_num -6)){
+    //             page_start = page_num-12;
+    //         };    
+    //     };
+    //     // 添加页码
+    //     for (var i =page_end; i >= page_start; i--){
+    //         if (i == page_cur){
+    //             $("li.page_last").after("<li><a class='page_no'><strong>"+i+"</strong></a></li>");
+    //         }else{
+    //             $("li.page_last").after("<li><a class='page_no'>"+i+"</a></li>");
+    //         }
+    //     };
+    //     // 给页码绑定点击事件
+    //     $("a.page_no").bind("click", function(){
+    //         search(this.text);
+    //         page_cur = this.text;
+    //     });
+    // };
+    searchBtn.bind(
+        "click", 
+        function(){
+            search(1);
+        }
+    );
 </script>
 {% endblock %}

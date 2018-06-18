@@ -10,30 +10,19 @@
         <meta charset="utf-8">
         <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
         <!-- 加载 jquery 插件 -->
-        <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
         <!-- 引入BOOTSTRAP3 -->
         <!-- 最新版本的 Bootstrap3 核心 CSS 文件 -->
         <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
-        <!-- <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
+        <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
         <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-        <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <!-- <!-- <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
         <script src="{% static '/masonry/masonry.pkgd.min.js' %}"></script>  <!-- 加载 masonry 页面布局插件, 不能在图片加载完后重新布局, 需要配件 imagesloaded 插件 -->
         <script src="{% static '/masonry/imagesloaded.pkgd.min.js' %}"></script>  <!-- 加载 imagesloaded 插件，和masonry同时使用, 提前加载图片 -->
-        <!-- 新 Bootstrap 核心 CSS 文件 -->
-        <!-- <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> -->
-        <!-- 可选的Bootstrap主题文件（一般不使用）-->
-        <!-- <script src="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"></script> -->
-        <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-        <!-- <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script> -->
-        <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-        <!-- <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
        
         <!-- 加载D3 -->
-        <!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
-        <script src="{% static 'd3/d3.min.js' %}"></script>
+        <script src="https://cdn.bootcss.com/d3/4.13.0/d3.min.js"></script>
         <!-- 百度网站统计代码 -->
         <script>
             var _hmt = _hmt || [];
@@ -44,7 +33,7 @@
               s.parentNode.insertBefore(hm, s);
             })();
         </script>
-        <title>{% block title %}淡墨青衫-书山有路勤为径, 学海无涯苦作舟{% endblock %}</title>
+        <title>{% block title %}淡墨青衫 - 淘宝优惠券, 小工具 {% endblock %}</title>
     </head>
     <body>
         {% include 'nav.html' %}
