@@ -40,9 +40,6 @@
                 <input name="need_prepay" type="checkbox" value="true">
             </div>
         </div>
-        <div class="row" style="margin:10px 0px 10px 0px;" id="sortMethod">
-
-        </div>
     </form>
 </div>
 <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="90%" color=#987cb9 SIZE=3>
@@ -116,13 +113,13 @@
                 // 绘制列表页面
                 doc.empty();
                 data['coupon_list'].forEach(function(i){
-                    var docstring = '<div class="col-lg-3 col-md-4 col-sm-6 col-xs-6"><a href="' + 
+                    var docstring = '<div class="col-lg-3 col-md-4 col-sm-6 col-xs-6" style="padding:0 5px"><a href="' + 
                         i['my_url'] + 
-                    '" target="_blank"><div class="thumbnail"><img src="' + 
+                    '" target="_blank"><div class="thumbnail"><div width="100" height="300"><img src="' + 
                     i['pict_url'] + 
-                    '" class="img-responsive"><div class="caption"><h4>' + 
+                    '" data-bd-imgshare-binded="1" width="100%" height="300"></div><div class="caption"><div style="width:100%; overflow:hidden;height:60px;">' + 
                     i['title'] + 
-                    '</h4><div class="item-coupon"><span class="badge" style="float:right;background:red;color:white;">' + 
+                    '</div><div class="item-coupon"><span class="badge" style="float:right;background:red;color:white;">' + 
                     i['coupon_info'] + 
                     '</span><p>券后价:￥' + 
                     i['my_price'] + 

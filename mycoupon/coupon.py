@@ -16,6 +16,7 @@ def get_iteminfo(num_iids):
     :param num_iids, 商品id串, 用','分割, 最多40个
     """
     status = False
+    num = 0
     result = []
     body = {
         'method': 'taobao.tbk.item.info.get',
@@ -28,10 +29,11 @@ def get_iteminfo(num_iids):
         result = 'tbk_item_info_get_response'
         result = tmp['tbk_item_info_get_response']['results']['n_tbk_item']
         status = True
+        num = len(result)
     except Exception as E:
         result = E
     finally:
-        return (status, result)
+        return (status, num, result)
 
 def get_coupon(q='', cat='', page_no=1, page_size=100, is_tmall='false', need_free_shipment='false', need_prepay='false', end_price=0, start_price=0, sort='tk_total_commi_des'):
     """
