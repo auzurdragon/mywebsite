@@ -33,15 +33,11 @@
               s.parentNode.insertBefore(hm, s);
             })();
         </script>
-        <title>{% block title %}赞猫-每天都有优惠券 淘宝 优惠券 好券 神券 宝贝搜索 小工具 {% endblock %}</title>
+        <title>{% block title %}淡墨青衫-每天都有优惠券 淘宝 优惠券 好券 神券 宝贝搜索 小工具 {% endblock %}</title>
     </head>
     <body>
         {% include 'nav.html' %}
         {% block content %}<p>错误:未获得block content</p>{% endblock %}
-	<div class="footer"">
-		<div class="container">
-			<a href="//www.aikuaidi.cn/" target="_blank" >快递查询</a>
-		</div>
-	</div>
+	    {% include 'footer.html' %}
     </body>
 </html>
