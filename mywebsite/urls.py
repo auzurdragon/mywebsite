@@ -23,7 +23,7 @@ from django.conf.urls.static import static
 # 加载mywebsite下的views视图文件
 from mywebsite import views
 from mycoupon import views as mycoupon
-from mychild import views as mychild
+# from mychild import views as mychild
 from mycms import views as cmsviews
 from mynote import views as mynote
 urlpatterns = [
@@ -32,7 +32,8 @@ urlpatterns = [
     # url(r'^$', mycoupon.tb_coupon),
     url(r'^coupon/$', mycoupon.tb_coupon),
     url(r'^coupon/coupon_rest', mycoupon.coupon_rest),
-    url(r'^mychild/practice/$', mychild.practice),
+    url(r'^mynote/$', mynote.index),        # 加载mynote主页
+    # url(r'^mychild/practice/$', mychild.practice),
     url(r'^python/$', views.python),
     url(r'^examples/$', views.examples),
     url(r'^children/$', views.children),
@@ -43,16 +44,12 @@ urlpatterns = [
     url(r'chisearch/$', views.chisearch),
     url(r'pinyin/$', views.pinyin),
     url(r'^login/$', views.login),
-    url(r'^test/$', views.test),            # 返回request测试结果
-    url(r'wxopen/$', views.wxopen),         # 微信接口验证
-    url(r'wxopen$', views.wxopen),         # 微信接口验证，注意不能使用wxopen/$
+    # url(r'^test/$', views.test),            # 返回request测试结果
+    # url(r'wxopen/$', views.wxopen),         # 微信接口验证
+    # url(r'wxopen$', views.wxopen),         # 微信接口验证，注意不能使用wxopen/$
     url(r'mycase/([\w.]{0,20})$', views.mycase),   # 传递()中的数字、字母和下划线字符给mycase()
-    url(r'^applications/$', views.applications),  # 我的应用
-    url(r'^mynote/weixin/$', mynote.weixin),        # 微信接口调用
-    url(r'^mynote/weixin/login/$', mynote.weixin_login),    # 微信网页登录
-    url(r'^mynote/weixin/check/$', mynote.weixin_check),    # 微信号被封了
     # 管理后台
-    url(r'cms/$', cmsviews.index),
+    # url(r'cms/$', cmsviews.index),
     # url(r'root.txt', views.rootauth),             # root.txt文件验证，阿里
     # url(r'jos_guid.txt', views.jdrootcheck),      # 京东开发者网站验证
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

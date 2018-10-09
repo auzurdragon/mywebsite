@@ -30,8 +30,8 @@ def login(request):
 
 def index(request):
     """index 首页"""
-    # return render(request, 'index.html')
-    return HttpResponseRedirect("/coupon")
+    return render(request, 'index.html')
+    # return HttpResponseRedirect("/coupon")
 
 def python(request):
     """python笔记"""
