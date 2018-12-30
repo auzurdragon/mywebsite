@@ -67,10 +67,10 @@ TEMPLATES = [
         'DIRS': [   # 指定模板加载路径
             'templates/',             # 绝对路径, <webroot>/templates
             'templates/mycase/',
-            # 'mycoupon/templates/',
             '/var/www/mywebsite/templates/',    # 服务器端的模板目录路径
 	        '/var/www/mywebsite/templates/mycase/',
             # '/var/www/mywebisite/mycoupon/templates/',
+            # 'mycoupon/templates/',
             os.path.join(os.path.dirname('__file__'), 'templates').replace('\\', '/') # 相对路径,各应用模板路径的关键
         ],
         'APP_DIRS': True,
@@ -146,6 +146,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static').replace('\\', '/'),
     'static/',
     'mycms/static/',
+    'mynote/static/',
 ]
 
 # 设置生产环境的静态文件目录，使用python manage.py collectstatic可以把开发环境各个静态文件收集到该目录，交由http服务统一管理

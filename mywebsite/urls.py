@@ -28,8 +28,8 @@ from mycms import views as cmsviews
 from mynote import views as mynote
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.index),                # 指定首页为index
-    # url(r'^$', mycoupon.tb_coupon),
+    # url(r'^$', views.index),                # 指定首页为index
+    url(r'^$', mycoupon.tb_coupon),
     url(r'^coupon/$', mycoupon.tb_coupon),
     url(r'^coupon/coupon_rest', mycoupon.coupon_rest),
     url(r'^mynote/$', mynote.index),        # 加载mynote主页
