@@ -1,4 +1,0 @@
-<uwsgi>
-    <socket>:80</socket>
-    <chdir>/data/mywebsite
-</uwsgi>
