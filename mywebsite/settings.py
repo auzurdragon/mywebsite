@@ -29,7 +29,7 @@ SECRET_KEY = '4csj$_2@&0h08q!!(&x^1$j)se(*la03!xh0+w^o-v(+o(g!8e'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['139.9.63.238', '127.0.0.1', 'localhost', 'www.4zan.net', 'www.5izan.site']
+ALLOWED_HOSTS = ['*','139.9.63.238', '127.0.0.1', 'localhost', 'www.4zan.net', 'www.5izan.site']
 
 
 # Application definition
