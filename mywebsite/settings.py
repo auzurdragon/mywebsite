@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'mycoupon',
     'mychild',
     'mynote',
+    'api',
 ]
 
 MIDDLEWARE = [
