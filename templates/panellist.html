@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container body">
+    <div class="row">
+        {% for item in PanelList %}
+        <div class="col-md-3" onmouseover="this.style.cursor='pointer'" onclick="window.location.href='{{ item.url }}'" >
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <H4 class="panel-title">{{ item.title }}</H4>
+                </div>
+                <div class="panel-body">
+                    <p>{{ item.content }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

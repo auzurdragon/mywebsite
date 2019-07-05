@@ -7,7 +7,7 @@ from django.http import JsonResponse
 # Create your views here.
 
 def weixin(request):
-    print(request)
     echostr = request.GET.get('echostr')
+    print(echostr)
     print(dir(request.GET))
     return HttpResponse(echostr)

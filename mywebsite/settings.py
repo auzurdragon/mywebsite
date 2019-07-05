@@ -43,11 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'mywebsite',
     'examples',
-    'mycms',                        # 管理后台
     'mycoupon',
-    'mychild',
-    'mynote',
     'api',
+    'myapps',
 ]
 
 MIDDLEWARE = [
@@ -146,8 +144,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static').replace('\\', '/'),
     'static/',
-    'mycms/static/',
-    'mynote/static/',
 ]
 
 # 设置生产环境的静态文件目录，使用python manage.py collectstatic可以把开发环境各个静态文件收集到该目录，交由http服务统一管理

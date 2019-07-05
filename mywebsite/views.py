@@ -27,10 +27,13 @@ def login(request):
             return HttpResponseRedirect("/login")
     return render(request, "login.html")
 
-
 def index(request):
     """index 首页"""
     return render(request, 'index.html')
+
+def sitelog(request):
+    """网站更新日志"""
+    return render(request, 'sitelog.html')
 
 def python(request):
     """python笔记"""
@@ -126,36 +129,6 @@ def hwsubmit(request):
             postlist.content = ""
             postlist.datestr = today        
         return render(request, "hwsubmit.html", {"tlist":tlist, "today":today, "postlist":postlist, "errmsg":errmsg})
-
-def pinyin(request):
-    """"""
-    from mywebsite.models import web_homework
-    from xpinyin import Pinyin
-    pinyin = Pinyin()
-    urlid = request.GET.get("urlid")
-    if not urlid:
-        clist = list(web_homework.objects.filter(classof=3).order_by("-orderid", "-urlid"))
-        print(type(clist))
-        for item in clist:
-            item.title = [{"word":j, "pinyin":pinyin.get_pinyin(j, show_tone_marks=True)} for j in item.title]
-        ctype = False
-    else:
-        clist = list(
-            web_homework.objects.filter(classof=3, urlid=urlid).order_by("-orderid", "-urlid")
-            )[0]
-        clist.title = [
-            {"word":j,
-             "pinyin":pinyin.get_pinyin(j, show_tone_marks=True)}
-            for j in clist.title
-        ]
-        tmp = clist.content[3:-4].split("</br>")
-        clist.author = [{"word":j, "pinyin":pinyin.get_pinyin(j, show_tone_marks=True)} for j in tmp[0]]
-        clist.content = [
-            [{"word":j, "pinyin":pinyin.get_pinyin(j, show_tone_marks=True)} for j in i]
-            for i in tmp[1:]
-            ]
-        ctype = True
-    return render(request, 'children/pinyin.html', {"ctype":ctype, "clist":clist})
 
 @csrf_exempt
 def test(request):

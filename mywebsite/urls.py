@@ -23,28 +23,26 @@ from django.conf.urls.static import static
 # 加载mywebsite下的views视图文件
 from mywebsite import views
 from mycoupon import views as mycoupon
-# from mychild import views as mychild
-from mycms import views as cmsviews
-from mynote import views as mynote
 from api import views as api
+from myapps import views as myapps
+# 加载重定向模块
+from django.views.generic.base import RedirectView
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # url(r'^$', views.index),                # 指定首页为index
     url(r'^$', mycoupon.tb_coupon),
+    url(r'^myapps/$', myapps.myapps),         # 加载我的应用首页
+    url(r'^myapps/qydata/$', myapps.qydata),
+    url(r'^favicon.ico$', RedirectView.as_view(url='static/favicon.ico')),  # 返回favicon.ico
     url(r'^coupon/$', mycoupon.tb_coupon),
     url(r'^coupon/coupon_rest', mycoupon.coupon_rest),
-    url(r'^mynote/$', mynote.index),        # 加载mynote主页
+    # url(r'^mynote/$', mynote.index),        # 加载mynote主页
     url(r'^api/weixin', api.weixin),        # 加载微信api
+    url(r'^sitelog/$', views.sitelog),    # 网站更新日志
     # url(r'^mychild/practice/$', mychild.practice),
-    url(r'^python/$', views.python),
     url(r'^examples/$', views.examples),
-    url(r'^children/$', views.children),
     url(r'^syllabus/$', views.syllabus),
-    url(r'^hwsubmit/$', views.hwsubmit),
-    url(r'^booklist/$', views.booklist),
-    url(r'^schedule/$', views.schedule),
-    url(r'chisearch/$', views.chisearch),
-    url(r'pinyin/$', views.pinyin),
     url(r'^login/$', views.login),
     # url(r'^test/$', views.test),            # 返回request测试结果
     # url(r'wxopen/$', views.wxopen),         # 微信接口验证
