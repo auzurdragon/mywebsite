@@ -20,9 +20,10 @@ def qydata(request):
     api = '/myapps/qydata'
     TableTitle, TableRow, RowNum = [],[], 0
     keywords = request.GET.get('q')
-    pagenum = 1
+    pagenum = 2
     if keywords:
         from myapps.qydata import GetQyDataQichacha
+        print(keywords)
         try:
             qicc = GetQyDataQichacha(keywords.split())
             qicc.get_list_all(pagenum)

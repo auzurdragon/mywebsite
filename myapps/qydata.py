@@ -62,8 +62,8 @@ class GetQyData(object):
         if header:
             html = requests.get(url, headers=header)
         else:
-            html = requests.get(url, headers=choice(self.RequestInfo['headers']), cookies=choice(self.RequestInfo['cookies']))
-        page = bs(html.content, features='html.parser')
+            html = requests.get(url, headers=choice(self.RequestInfo['headers']), cookies=choice(self.RequestInfo['cookies']), timeout=5)
+        page = bs(html.content, features='html5lib')
         return page
     def get_detail(self,url):
         """
@@ -113,8 +113,8 @@ class GetQyDataQichacha(GetQyData):
         if pageno > 1:url = '%s&p=%d' % (url,pageno) 
         page = self.get_page(url=url)
         # 提取出总页数
-        if getLastPage:
-            self.lastPage = int(page.find('ul', class_='pagination').find_all('a')[-2].text.strip().replace('.',''))
+        # if getLastPage:
+        #     self.lastPage = int(page.find('ul', class_='pagination').find_all('a')[-2].text.strip().replace('.',''))
         info_list = page.find('tbody', id='search-result')
         if not info_list:
             print('找不到数据')
@@ -125,7 +125,7 @@ class GetQyDataQichacha(GetQyData):
             print(QyInfo)
             self.QyList.append({
                 'Name':i.find('a', class_='ma_h1').text,
-                'Status':i.find('td', class_='statustd').span.text,
+                'Status':i.find('span', class_='nstatus').text,
                 'Detail':'https://www.qichacha.com%s' % i.find('a', class_='ma_h1').get('href'),
                 'LxName':QyInfo[0][1],
                 'Capital':QyInfo[0][2],
@@ -136,21 +136,11 @@ class GetQyDataQichacha(GetQyData):
                 })            
     def get_list_all(self,pageNum=6):
         self.get_list_one(getLastPage=True)
-        if pageNum > self.lastPage: pageNum = self.lastPage
+        # if pageNum > self.lastPage: pageNum = self.lastPage
         for pageno in range(2,pageNum+1):
             self.get_list_one(pageno=pageno)
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='从企查查获得企业数据, cookies使用登录后的网络请求记录中获取，求好心人给个付费账号测试下cookies')
-    parser.add_argument('--keywords', '-k', help='添加关键字列表,注意使用","号分隔')
-    parser.add_argument('--csv', '-c', help='指定保存的csv文件名, 否则不保存')
-    parser.add_argument('--excel', '-e', help='指定保存excel文件名, 否则不保存')
-    args = parser.parse_args()
-    if args.keywords:
-        keywords = args.keywords.split()
-        qicc = GetQyDataQichacha(keywords)
-        qicc.get_list_all()
-        print('get_list_all, %d logs' % len(qicc.QyList))
-    else:
-        print('Please input keywords')
-        sys.exit(0)
+    from myapps.qydata import GetQyDataQichacha
+    t = GetQyDataQichacha(['饮料'])
+    t.get_list_all(2)
