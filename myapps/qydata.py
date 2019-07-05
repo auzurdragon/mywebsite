@@ -7,7 +7,6 @@
 import pickle
 import requests
 import logging
-import pandas as pd
 import argparse
 import sys
 from bs4 import BeautifulSoup as bs
@@ -25,12 +24,6 @@ class GetQyData(object):
         self.fromsite = ''
         self.keywords=keywords
         self.QyList=[]
-        self.QyDf = pd.DataFrame()
-    def to_pandas(self):
-        """
-            将self.QyList转换成pandas对象
-        """
-        self.QyDf=pd.DataFrame(self.QyList, columns=['Name','Status','Capital','estDate','Addr','LxName','Email','Tel','Detail'])
     def get_keywords(self,keywords=[]):
         self.keywords = keywords
     def save_pkl(self, filename='tmp.pkl'):
@@ -45,16 +38,6 @@ class GetQyData(object):
         """
         with open(filename, 'rb') as f:
             self = pickle.load(f)
-    def save_xls(self, filename='GetQyData.xls'):
-        """
-            保存记录到 excel 文件
-        """
-        self.QyDf.to_excel(filename)
-    def save_csv(self, filename='QyData.csv'):
-        """
-            保存记录到 CSV 文件
-        """
-        self.QyDf.to_csv(filename)
     def save_mysql(self):
         """
             保存记录到 mysql 数据
@@ -168,12 +151,6 @@ if __name__ == '__main__':
         qicc = GetQyDataQichacha(keywords)
         qicc.get_list_all()
         print('get_list_all, %d logs' % len(qicc.QyList))
-        qicc.to_pandas()
     else:
         print('Please input keywords')
         sys.exit(0)
-    if args.csv:
-        qicc.save_csv(args.csv)
-    if args.excel:
-        print(args.excel)
-        qicc.save_xls(args.excel)
