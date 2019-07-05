@@ -32,5 +32,6 @@ def qydata(request):
                 TableRow = [ [i['Name'],i['Status'],i['Capital'],i['estDate'],i['LxName'],i['Tel'],i['Email'],i['Addr']] for i in qicc.QyList]
         except Exception as e:
             TableTitle, TableRow, RowNum = [],[], 0
+            description = e
     print(TableTitle, TableRow, RowNum)
     return render(request, 'search.html',{'Api':api,'TableTitle':TableTitle,'TableRow':TableRow, 'RowNum':RowNum,'description':description})
