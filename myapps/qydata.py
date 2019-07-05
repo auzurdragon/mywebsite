@@ -63,7 +63,7 @@ class GetQyData(object):
             html = requests.get(url, headers=header)
         else:
             html = requests.get(url, headers=choice(self.RequestInfo['headers']), cookies=choice(self.RequestInfo['cookies']))
-        page = bs(html.content, features='html5lib')
+        page = bs(html.content, features='html.parser')
         return page
     def get_detail(self,url):
         """
