@@ -12,23 +12,10 @@
   }
 </style>
 <div class="container">
-    <div class="page-header">
-        <h3>2019-07-05</h3>
-    </div>
-    <div class="content">
-        <ul>
-            <li>添加“小工具”模块。</li>
-            <li>添加“企业数据查询”工具。</li>
-        </ul>
-    </div>
-    <div class="page-header">
-        <h3>2019-06-17</h3>
-    </div>
-    <div class="content">
-        <ul>
-            <li>首页导航栏添加"网站日志"模块，记录网站更新情况。</li>
-        </ul>
-    </div>
+    {% for item in siteLog %}
+    <div class='page-header'><h3>{{ item.date }}</h3></div>
+    <div class="content"><ul>{% for content in item.content %}<li>{{ content }}</li>{% endfor %}</ul></div>
+    {% endfor %}
 </div>
 
 {% endblock %}

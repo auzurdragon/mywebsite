@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if description %}
+<div class="container">
+    <div class="row">
+        <pre>{{ description }}</pre>
+    </div>
+</div>
+{% endif %}
+<div class="container">
+    <div class="row">
+        <form class="col-lg-10" action="{{ api }}" method="POST"" enctype="multipart/form-data">{% csrf_token %}
+            <div class="form-group">
+                <span for="fileinput">选择文件</label>
+                <input type='file' name="filename" id="fileinput">
+            </div>
+            <button type="submit" class="btn btn-default">确定</button>
+        </form>
+    </div>
+</div>
+<HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="100%" color=#987cb9 SIZE=3>
+<div class="container">
+    {% if ifTable %}
+    <div class="row">
+        <div class="col-md-6">
+            <p>共有{{ rowNum }}个词条</p>
+            <table class="table table-striped">
+                <tr>
+                    {% for item in tableTitle %}
+                    <th>{{ item }}</th>
+                    {% endfor %}
+                </tr>
+                {% for row in tableRow %}
+                <tr>
+                    {% for col in row %}
+                    <td>{{ col }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="col-md-6">
+            {% if images %}
+            <img src="data:image/jpeg; base64,{{ images }}" style="width:100%;align-items:center;">
+            {% endif %}
+        </div>
+    </div>
+    {% else %}
+    <h4>无搜索结果, 请输入关键字搜索</h4>
+    {% endif %}
+</div>
+{% endblock %}

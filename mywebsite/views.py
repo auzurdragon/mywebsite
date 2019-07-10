@@ -33,7 +33,16 @@ def index(request):
 
 def sitelog(request):
     """网站更新日志"""
-    return render(request, 'sitelog.html')
+    siteLog = []
+    with open('static/sitelogs.log', 'r', encoding='utf8') as f:
+        for i in f.readlines():
+            j = i.split()
+            print(j)
+            siteLog.append(
+                {'date':j[0].strip(),
+                'content':j[1].split('|')})
+    print(siteLog)
+    return render(request, 'sitelog.html', {'siteLog':siteLog})
 
 def python(request):
     """python笔记"""
