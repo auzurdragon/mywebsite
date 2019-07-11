@@ -184,7 +184,7 @@ def wordcloud(request):
         # 将词云图转换为 base64 串
         imgIo = BytesIO()
         img.save(imgIo, format='JPEG')
-        img = base64.b64encode(imgIo.getvalue())
+        img = base64.b64encode(imgIo.getvalue()).decode('utf8')
         return (True, wordNum, wordFrequency, img)
     if request.method == 'POST':    # 请求方法为 POST 时, 接收上传数据
         strs = request.FILES.get("filename", None)    # 接收上传的 txt 文件
