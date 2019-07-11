@@ -41,7 +41,6 @@ def sitelog(request):
             siteLog.append(
                 {'date':j[0].strip(),
                 'content':j[1].split('|')})
-    print(siteLog)
     return render(request, 'sitelog.html', {'siteLog':siteLog})
 
 def python(request):
