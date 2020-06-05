@@ -9,4 +9,4 @@ selenium
 pymongo
 mongoengine
 itchat
-Django == 1.11
+Django == 1.11.29
